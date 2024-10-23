@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image, Text, Animated } from "react-native";
 
 import { icons } from "../constants";
-import { Evento } from "../constants/types";
 import CustomButton from "./CustomButton";
+import Feather from "@expo/vector-icons/Feather";
 
 const EventCard = ({
   category,
@@ -18,19 +18,58 @@ const EventCard = ({
   userID: string;
 }) => {
   return (
-    <View className="flex gap-4 h-full ">
-      <Image
-        source={{ uri: thumbnail }}
-        className="w-full h-[10rem] rounded-sm"
-        resizeMode="cover"
-      />
-      <CustomButton
-        title={"participate"}
-        containerStyles={null}
-        handlePress={() => {}}
-        isLoading={false}
-        textStyles={null}
-      />
+    <View className="flex flex-col items-center mb-14">
+      <Text className="text-gray-100 text-lg text-gray-100 w-full">
+        {label}
+      </Text>
+      <View className="w-full relative">
+        <Image
+          source={{ uri: thumbnail }}
+          className="w-full  h-[250px] rounded-sm flex justify-center items-center"
+          resizeMode="cover"
+        />
+        <View
+          className="absolute bottom-0  right-4 "
+          style={{ transform: [{ translateY: 25 }] }}
+        >
+          <CustomButton
+            title={"participate"}
+            containerStyles={"mt-2  px-6 py-3"}
+            handlePress={() => {}}
+            isLoading={false}
+            textStyles={null}
+          />
+        </View>
+      </View>
+      <View className="w-full flex flex-row   my-8">
+        <TouchableOpacity
+          onPress={() => {}}
+          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+        >
+          <Feather name="user" size={20} color="#7F6AF3" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {}}
+          style={{ marginLeft: -12 }}
+          className="bg-[#39383B] w-8 h-8 items-center justify-center rounded-full p-1"
+        >
+          <Feather name="user" size={20} color="#7F6AF3" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ marginLeft: -12 }}
+          onPress={() => {}}
+          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+        >
+          <Feather name="user" size={20} color="#7F6AF3" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ marginLeft: -12 }}
+          onPress={() => {}}
+          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+        >
+          <Feather name="user" size={20} color="#7F6AF3" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -39,18 +78,18 @@ const _EventCard = ({
   category,
   label,
   thumbnail,
-  userid,
+  userID,
 }: {
   category: string;
   label: string;
   thumbnail: string;
-  userid: string;
+  userID: string;
 }) => {
   return (
     <View className="flex flex-col items-center px-4 mb-14">
       <View className="flex flex-row gap-3 items-start">
-        <View className="flex justify-center items-center flex-row flex-1">
-          <View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
+        <View className="flex justify-center items-center">
+          <View className="w-[46px] h-full rounded-lg border border-secondary flex justify-center items-center p-0.5">
             <Image
               source={{ uri: thumbnail }}
               className="w-full h-full rounded-lg"

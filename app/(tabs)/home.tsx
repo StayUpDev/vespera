@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -37,28 +38,8 @@ const Home = () => {
   // and horizontal flatlist
 
   return (
-    <SafeAreaView className="bg-primary px-6 w-full flex justify-center">
-      <View className="flex my-6 px-4 space-y-6">
-        <View className="flex justify-between items-start flex-row mb-6">
-          <View>
-            <Text className="font-plight  text-gray-100">home</Text>
-          </View>
-
-          <View className="flex gap-6 flex-row">
-            <TouchableOpacity onPress={() => {}}>
-              <Feather name="settings" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <Feather name="bell" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <Feather name="user" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+    <SafeAreaView className="bg-primary px-6 ">
       <FlatList
-        className="h-full gap-6"
         data={events}
         keyExtractor={(item: Evento) => item.$id}
         renderItem={({ item }: { item: Evento }) => (
@@ -68,6 +49,27 @@ const Home = () => {
             thumbnail={item.thumbnail}
             userID={item.userID}
           />
+        )}
+        ListHeaderComponent={() => (
+          <View className="flex my-6 px-4 space-y-6 w-full">
+            <View className="flex justify-between items-start flex-row mb-6 w-full">
+              <View>
+                <Text className="font-plight  text-gray-100">home</Text>
+              </View>
+
+              <View className="flex gap-6 flex-row">
+                <TouchableOpacity onPress={() => {}}>
+                  <Feather name="settings" size={20} color="#7F6AF3" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                  <Feather name="bell" size={20} color="#7F6AF3" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                  <Feather name="user" size={20} color="#7F6AF3" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         )}
         ListEmptyComponent={() => (
           <EmptyState
