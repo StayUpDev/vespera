@@ -51,7 +51,7 @@ const Welcome = () => {
         }}
       >
         <View className="pt-12 pb-6 px-6 flex justify-between align-center h-full w-full">
-          <Text className="text-center text-6xl text-gray-100 font-pextralight">
+          <Text className="text-center text-6xl text-gray-100 font-pthin">
             ves&#8217;pera
           </Text>
 
