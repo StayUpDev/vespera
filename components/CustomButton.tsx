@@ -1,19 +1,21 @@
-import React, { useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
+import React from "react";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import useButtonAnimation from "../hooks/useTouchableDynamicShadowing";
 
+interface CustomButtonInterface {
+  title: string;
+  handlePress: () => void;
+  containerStyles?: string;
+  textStyles?: string;
+  isLoading?: boolean;
+}
 const CustomButton = ({
   title,
   handlePress,
   containerStyles,
   textStyles,
-  isLoading,
-}) => {
+  isLoading = false,
+}: CustomButtonInterface) => {
   const { scaleValue, shadowStyle, animateIn, animateOut } =
     useButtonAnimation();
   return (
