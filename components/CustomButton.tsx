@@ -3,7 +3,7 @@ import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import useButtonAnimation from "../hooks/useTouchableDynamicShadowing";
 import { clsx } from "clsx";
 
-interface CustomButtonInterface {
+interface CustomButtonProps {
   title: string;
   handlePress: () => void;
   containerStyles?: string;
@@ -16,7 +16,7 @@ const CustomButton = ({
   containerStyles,
   textStyles,
   isLoading = false,
-}: CustomButtonInterface) => {
+}: CustomButtonProps) => {
   const { scaleValue, shadowStyle, animateIn, animateOut } =
     useButtonAnimation();
   return (

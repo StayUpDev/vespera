@@ -3,6 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
 
+interface FormFieldProps {
+  title: string;
+  type?: string;
+  value?: string;
+  placeholder?: string;
+  handleChangeText: (text: string) => void;
+  otherStyles?: string;
+  [key: string]: any;
+}
 const FormField = ({
   title,
   type,
@@ -11,7 +20,7 @@ const FormField = ({
   handleChangeText,
   otherStyles,
   ...props
-}) => {
+}: FormFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   // TODO: Sto componente e' una merda. va modificato ASAP
