@@ -11,16 +11,19 @@ import { AppwriteResponse, Evento, User } from "../constants/types";
 import { CreateEvento } from "../app/(tabs)/create";
 
 export const appwriteConfig = {
-  endpoint: "http://172.20.10.3/v1",
-  platform: "com.rickturner2001.vespera",
-  projectId: "6716aa5a000aeb3cc595",
-  storageId: "6716b1730013ea729044",
-  databaseId: "6716aadc0021933167de",
-  userCollectionId: "6716aae60031a288dd2b",
-  eventoCollectionId: "6716b72f0023f7a016aa",
-  eventoImmagineCollectionId: "6716be440021a7da5bc8",
-  userEventCommentCollectionId: "6716ba75000543c02b42",
-  userEventLikeCollectionId: "6716ba2b0014ba44c4ff",
+  endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
+  platform: process.env.EXPO_PUBLIC_APPWRITE_PLATFORM,
+  projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+  storageId: process.env.EXPO_PUBLIC_APPWRITE_STORAGE_ID,
+  databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+  userCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USER_COLLECTION_ID,
+  eventoCollectionId: process.env.EXPO_PUBLIC_APPWRITE_EVENTO_COLLECTION_ID,
+  eventoImmagineCollectionId:
+    process.env.EXPO_PUBLIC_APPWRITE_EVENTO_IMMAGINE_COLLECTION_ID,
+  userEventCommentCollectionId:
+    process.env.EXPO_PUBLIC_APPWRITE_USER_EVENTO_COMMENTO_COLLECTION_ID,
+  userEventLikeCollectionId:
+    process.env.EXPO_PUBLIC_APPWRITE_USER_EVENTO_LIKE_COLLECTION_ID,
 };
 
 const client = new Client();
