@@ -51,11 +51,11 @@ const Welcome = () => {
         }}
       >
         <View className="pt-12 pb-6 px-6 flex justify-between align-center h-full w-full">
-          <Text className="text-center text-6xl text-gray-100 font-pextralight">
+          <Text className="text-center text-7xl text-[#fdfdff] font-plight">
             ves&#8217;pera
           </Text>
 
-          <View className="flex gap-6 flex-col  mx-auto items-center w-full justify-center">
+          <View className="flex gap-6 flex-col mx-auto items-center w-full justify-center">
             <FormField
               type={null}
               title={null}
