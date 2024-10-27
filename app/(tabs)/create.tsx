@@ -20,6 +20,7 @@ import { DocumentPickerAsset } from "expo-document-picker";
 import { createEvent } from "../../lib/clients/evento";
 
 export type CreateEvento = {
+  description: string;
   category: string;
   costo: number;
   dateFrom: Date;
@@ -34,6 +35,7 @@ const Create = () => {
   const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false);
   const [event, setEvent] = useState<CreateEvento>({
+    description: "",
     category: "",
     costo: null,
     dateFrom: new Date(),
@@ -81,6 +83,7 @@ const Create = () => {
       Alert.alert("Error", error.message);
     } finally {
       setEvent({
+        description: "",
         category: "",
         costo: null,
         dateFrom: new Date(),
@@ -108,6 +111,13 @@ const Create = () => {
           value={event.label}
           placeholder="Dai un titolo al tuo evento..."
           handleChangeText={(e) => setEvent({ ...event, label: e })}
+          otherStyles="mt-10"
+        />
+        <FormField
+          title="Descrizione evento"
+          value={event.label}
+          placeholder="Dai una descrizione al tuo evento..."
+          handleChangeText={(e) => setEvent({ ...event, description: e })}
           otherStyles="mt-10"
         />
 
