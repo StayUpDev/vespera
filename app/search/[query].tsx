@@ -4,10 +4,10 @@ import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import useAppwrite from "../../lib/useAppwrite";
-import { searchEvents } from "../../lib/appwrite";
 import { EmptyState, SearchInput, VideoCard } from "../../components";
 import EventCard from "../../components/EventCard";
 import { Evento } from "../../constants/types";
+import { searchEvents } from "../../lib/clients/evento";
 
 const Search = () => {
   const { query }: { query: string } = useLocalSearchParams();

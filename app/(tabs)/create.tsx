@@ -13,11 +13,11 @@ import {
 } from "react-native";
 
 import { icons } from "../../constants";
-import { createEvent } from "../../lib/appwrite";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { Evento } from "../../constants/types";
 import { DocumentPickerAsset } from "expo-document-picker";
+import { createEvent } from "../../lib/clients/evento";
 
 export type CreateEvento = {
   category: string;

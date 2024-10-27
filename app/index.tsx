@@ -7,7 +7,7 @@ import { images } from "../constants";
 import { CustomButton, FormField, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { useState } from "react";
-import { signIn, getCurrentUser } from "../lib/appwrite";
+import { getCurrentUser, signIn } from "../lib/clients/user";
 
 const Welcome = () => {
   const { setUser, setIsLogged } = useGlobalContext();
