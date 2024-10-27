@@ -4,11 +4,12 @@ import { View, Image, FlatList, TouchableOpacity } from "react-native";
 
 import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserEvents, signOut } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { EmptyState, InfoBox, VideoCard } from "../../components";
 import EventCard from "../../components/EventCard";
 import { Evento } from "../../constants/types";
+import { signOut } from "../../lib/clients/user";
+import { getUserEvents } from "../../lib/clients/evento";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();

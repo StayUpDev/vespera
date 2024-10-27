@@ -13,12 +13,12 @@ import {
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons, images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllEvents, getLatestEvents } from "../../lib/appwrite";
 import { EmptyState, SearchInput, VideoCard } from "../../components";
 import EventCard from "../../components/EventCard";
 import { Evento } from "../../constants/types";
 
 import Feather from "@expo/vector-icons/Feather";
+import { getAllEvents, getLatestEvents } from "../../lib/clients/evento";
 
 const Home = () => {
   const { data: events, refetch } = useAppwrite(getAllEvents);
