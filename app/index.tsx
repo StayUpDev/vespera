@@ -50,12 +50,18 @@ const Welcome = () => {
           height: "100%",
         }}
       >
-        <View className="pt-12 pb-6 px-6 flex justify-between align-center h-full w-full">
-          <Text className="text-center text-7xl text-[#fdfdff] font-plight">
-            ves&#8217;pera
-          </Text>
+        <View className="pt-28 pb-6 px-6 flex justify-between align-center h-full w-full">
+          <View className="flex flex-col gap-3">
+            <Text className="text-center text-7xl text-[#fdfdff] font-plight opacity-80">
+              ves&#8217;pera
+            </Text>
 
-          <View className="flex gap-6 flex-col mx-auto items-center w-full justify-center">
+            <Text className="text-center text-xl text-[#fdfdff] font-pextralight opacity-60">
+              don&#8217;t waste another night.
+            </Text>
+          </View>
+
+          <View className="flex flex-col mx-auto items-center w-full justify-center">
             <FormField
               type={null}
               title={null}
@@ -65,7 +71,7 @@ const Welcome = () => {
               otherStyles="mt-7"
               keyboardType="email-address"
             />
-            <FormField
+           <FormField
               type={"password"}
               title={null}
               placeholder={"password"}
@@ -74,7 +80,7 @@ const Welcome = () => {
               otherStyles={null}
               keyboardType="email-address"
             />
-            <Text className="text-start   w-full text-gray-100 ">
+            <Text className="text-start w-full text-gray-100 ">
               Forgot your password?{" "}
               <Link className="text-[#7F6AF3]" href={"/"}>
                 Just reset it here
@@ -89,10 +95,10 @@ const Welcome = () => {
             />
           </View>
 
-          <Text className="text-gray-100">
-            is this your first time here?{" "}
+          <Text className="text-gray-100 mt-6">
+            is this your first time?{" "}
             <Link className="text-[#7F6AF3]" href={"/"}>
-              Come here
+              Come here and join us
             </Link>
           </Text>
         </View>
