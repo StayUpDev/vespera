@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Animated } from "react-native";
 import { ACTIVE_SHADOW_HEX, DEFAULT_SHADOW_HEX } from "../constants/styling";
 
@@ -7,12 +7,12 @@ const useButtonAnimation = () => {
 
   const [shadowStyle, setShadowStyle] = useState({
     shadowColor: DEFAULT_SHADOW_HEX,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.7,
+    shadowRadius: 14,
   });
 
-  const animateIn = () => {
+  const animateIn = useCallback(() => {
     Animated.spring(scaleValue, {
       toValue: 0.99,
       useNativeDriver: true,
@@ -21,12 +21,12 @@ const useButtonAnimation = () => {
     setShadowStyle({
       shadowColor: ACTIVE_SHADOW_HEX,
       shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
+      shadowOpacity: 1,
+      shadowRadius: 10,
     });
-  };
+  }, [scaleValue]);
 
-  const animateOut = () => {
+  const animateOut = useCallback(() => {
     Animated.spring(scaleValue, {
       toValue: 1,
       useNativeDriver: true,
@@ -38,7 +38,7 @@ const useButtonAnimation = () => {
       shadowOpacity: 0.3,
       shadowRadius: 4,
     });
-  };
+  }, []);
 
   return { scaleValue, shadowStyle, animateIn, animateOut };
 };
