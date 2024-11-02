@@ -6,8 +6,8 @@ import React, {
   useState,
   ReactNode,
 } from "react";
-import { getCurrentUser } from "../lib/appwrite";
 import { User } from "../constants/types";
+import { getCurrentUser } from "../lib/clients/user";
 
 interface GlobalContextType {
   isLogged: boolean;
