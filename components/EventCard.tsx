@@ -44,28 +44,28 @@ const EventCard = ({
       <View className="w-full flex flex-row   my-8">
         <TouchableOpacity
           onPress={() => {}}
-          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+          className="bg-primary-200  w-8 h-8 items-center justify-center rounded-full p-1"
         >
           <Feather name="user" size={20} color="#7F6AF3" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {}}
           style={{ marginLeft: -12 }}
-          className="bg-[#39383B] w-8 h-8 items-center justify-center rounded-full p-1"
+          className="bg-primary-200 w-8 h-8 items-center justify-center rounded-full p-1"
         >
           <Feather name="user" size={20} color="#7F6AF3" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ marginLeft: -12 }}
           onPress={() => {}}
-          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+          className="bg-primary-200  w-8 h-8 items-center justify-center rounded-full p-1"
         >
           <Feather name="user" size={20} color="#7F6AF3" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ marginLeft: -12 }}
           onPress={() => {}}
-          className="bg-[#39383B]  w-8 h-8 items-center justify-center rounded-full p-1"
+          className="bg-primary-200  w-8 h-8 items-center justify-center rounded-full p-1"
         >
           <Feather name="user" size={20} color="#7F6AF3" />
         </TouchableOpacity>
