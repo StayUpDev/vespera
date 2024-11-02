@@ -13,20 +13,21 @@ interface CustomButtonProps {
 const CustomButton = ({
   title,
   handlePress,
-  containerStyles,
-  textStyles,
+  containerStyles = "",
+  textStyles = "",
   isLoading = false,
-}: CustomButtonProps) => {
-  const { scaleValue, shadowStyle, animateIn, animateOut } =
-    useButtonAnimation();
+}) => {
+  const { scaleValue, shadowStyle, animateIn, animateOut } = useButtonAnimation();
+  console.log(shadowStyle);
   return (
     <TouchableOpacity
+    
       onPress={handlePress}
       onPressIn={animateIn}
       onPressOut={animateOut}
       activeOpacity={0.7}
       className={clsx(
-        "bg-secondary rounded-full h-min w-max flex pt-3.5 pb-3.5 justify-center items-center ",
+        "bg-secondary rounded-full h-min w-max flex pt-3.5 pb-3.5 justify-center items-center",
         containerStyles,
         isLoading && "opacity-50"
       )}
@@ -42,7 +43,6 @@ const CustomButton = ({
       >
         {title}
       </Text>
-
       {isLoading && (
         <ActivityIndicator animating={isLoading} color="#D8DFE9" size="small" />
       )}
