@@ -2,11 +2,10 @@ import { Databases, Query, ID } from "react-native-appwrite";
 import { CreateEvento } from "../../app/(tabs)/create";
 import { uploadFile } from "./file";
 import { appwriteConfig, getAppwriteClient } from "../appwrite";
-import { AppwriteResponse, Evento } from "../../constants/types";
+import { AppwriteResponse, Evento, EventoLike } from "../../constants/types";
 
 const databases = new Databases(getAppwriteClient());
 
-// Create Event
 export async function createEvent(evento: CreateEvento) {
   console.log("creating event");
   try {
@@ -115,7 +114,7 @@ export async function getLatestEvents() {
 
 export async function getEventLikesByEventID(eventID: string) {
   try {
-    const events: AppwriteResponse<Evento> = await databases.listDocuments(
+    const events: AppwriteResponse<EventoLike> = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userEventLikeCollectionId,
       [Query.search("eventoID", eventID)]
@@ -124,6 +123,40 @@ export async function getEventLikesByEventID(eventID: string) {
     if (!events) throw new Error("Something went wrong");
 
     return events.documents;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function createEventUserLike(eventID: String, userID: String) {
+  try {
+    const newEvento = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userEventLikeCollectionId,
+      ID.unique(),
+
+      {
+        eventoID: eventID,
+        userID,
+      }
+    );
+
+    return newEvento;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function deleteEventUserLike(eventUserLikeID: string) {
+  console.log("deleting like");
+  try {
+    const evento = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userEventLikeCollectionId,
+      eventUserLikeID
+    );
+
+    return evento;
   } catch (error) {
     throw new Error(error);
   }

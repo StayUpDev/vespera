@@ -46,6 +46,7 @@ export type UserEventoCommento = {
 };
 
 export type UserEventoLike = {
+  $id: string;
   eventoID: string;
   userID: string;
 };
