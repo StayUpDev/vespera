@@ -5,18 +5,23 @@ import { View, TouchableOpacity, Image, Text, Animated } from "react-native";
 import { icons } from "../constants";
 import CustomButton from "./CustomButton";
 import Feather from "@expo/vector-icons/Feather";
+import { useRouter } from "expo-router";
 
 const EventCard = ({
+  eventID,
   category,
   label,
   thumbnail,
   userID,
 }: {
+  eventID;
   category: string;
   label: string;
   thumbnail: string;
   userID: string;
 }) => {
+  const router = useRouter();
+
   return (
     <View className="flex flex-col items-center mb-14">
       <Text className="text-gray-100 text-lg text-gray-100 w-full">
@@ -35,7 +40,7 @@ const EventCard = ({
           <CustomButton
             title={"participate"}
             containerStyles={"mt-2  px-6 py-3"}
-            handlePress={() => {}}
+            handlePress={() => router.replace(`/(tabs)/${eventID}`)}
             isLoading={false}
             textStyles={null}
           />
