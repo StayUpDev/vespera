@@ -38,7 +38,7 @@ const Home = () => {
   // and horizontal flatlist
 
   return (
-    <SafeAreaView className="bg-primary px-6 ">
+    <SafeAreaView className="bg-white px-2 ">
       <FlatList
         data={events}
         keyExtractor={(item: Evento) => item.$id}
