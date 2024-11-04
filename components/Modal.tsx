@@ -15,7 +15,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
   title,
   children,
 }) => {
-  console.log("rendered children: ", children);
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>

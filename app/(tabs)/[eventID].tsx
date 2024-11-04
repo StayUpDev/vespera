@@ -3,8 +3,6 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 import {
-  createEventUserLike,
-  deleteEventUserLike,
   getEventByID,
   getEventLikesByEventID,
   searchEvents,
@@ -19,7 +17,7 @@ import { CustomButton } from "../../components";
 import { getCurrentUser } from "../../lib/clients/user";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getUserEventLikeItem } from "../../utils/event";
-import useEventLikes from "../../hooks/useEventLikes";
+import { useOptimisticEventLikes } from "../../hooks/useEventLikes";
 
 export default function ModalView() {
   const { eventID }: { eventID: string } = useLocalSearchParams();
@@ -31,7 +29,7 @@ export default function ModalView() {
 
   const { user } = useGlobalContext();
   const { eventLikes, loadingEventLikes, handleUserLike, refetchEventLikes } =
-    useEventLikes(eventID, user);
+    useOptimisticEventLikes(eventID, user);
 
   const handleRefresh = async () => {
     await refetch();
@@ -47,7 +45,6 @@ export default function ModalView() {
     // TODO: Loading likes data component
     return <Text>loading event likes...</Text>;
   }
-  console.log(event);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

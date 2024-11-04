@@ -94,8 +94,6 @@ const Create = () => {
       return Alert.alert("Please provide all fields");
     }
 
-    console.log("uploading");
-    console.log(event);
     setUploading(true);
     try {
       await createEvent({

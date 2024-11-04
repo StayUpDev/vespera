@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import { ResizeMode, Video } from "expo-av";
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  Text,
-  Animated,
-  Modal,
-} from "react-native";
+import { View, TouchableOpacity, Image, Text } from "react-native";
 
 import { icons } from "../constants";
 import CustomButton from "./CustomButton";
+import { Redirect } from "expo-router";
+import { useGlobalContext } from "../context/GlobalProvider";
+import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Redirect, useNavigation } from "expo-router";
 
 const EventCard = ({
   eventID,
@@ -22,7 +15,7 @@ const EventCard = ({
   thumbnail,
   userID,
 }: {
-  eventID;
+  eventID: string;
   category: string;
   label: string;
   thumbnail: string;
@@ -34,10 +27,6 @@ const EventCard = ({
     setModalVisible(!modalVisible);
   };
 
-  const openDrawerWithDetails = () => {
-    console.log("openDrawerWithDetails");
-    return <Redirect href={"(tabs)/(card)/details"} />;
-  };
   return (
     <>
       <View
@@ -69,8 +58,8 @@ const EventCard = ({
           </View>
         </View>
         <View className="interactions flex flex-row h-min mt-3">
-          <View className="ml-2">
-            <Feather name="heart" size={28} color="#595959" />
+          <View className="ml-2 flex flex-col items-center">
+            <LikeHeart eventID={eventID} />
           </View>
           <View className="ml-3">
             <Feather name="message-circle" size={28} color="#595959" />

@@ -7,7 +7,6 @@ import { AppwriteResponse, Evento, EventoLike } from "../../constants/types";
 const databases = new Databases(getAppwriteClient());
 
 export async function createEvent(evento: CreateEvento) {
-  console.log("creating event");
   try {
     const [thumbnailUrl] = await Promise.all([uploadFile(evento.thumbnail)]);
 
@@ -148,7 +147,6 @@ export async function createEventUserLike(eventID: String, userID: String) {
 }
 
 export async function deleteEventUserLike(eventUserLikeID: string) {
-  console.log("deleting like");
   try {
     const evento = await databases.deleteDocument(
       appwriteConfig.databaseId,
