@@ -153,16 +153,22 @@ const Create = () => {
             title="Scegli la categoria del tuo evento"
             visible={isChoosingCategory}
           >
-            <Picker
-              selectedValue={event.category}
-              onValueChange={(itemValue, itemIndex) =>
-                setEvent({ ...event, category: itemValue })
-              }
-            >
-              {categories.map((category) => (
-                <Picker.Item label={category} value={category} key={category} />
-              ))}
-            </Picker>
+            <View className="w-full h-full">
+              <Picker
+                selectedValue={event.category}
+                onValueChange={(itemValue, itemIndex) =>
+                  setEvent({ ...event, category: itemValue })
+                }
+              >
+                {categories.map((category) => (
+                  <Picker.Item
+                    label={category}
+                    value={category}
+                    key={category}
+                  />
+                ))}
+              </Picker>
+            </View>
           </CustomModal>
         ) : (
           <CustomButton

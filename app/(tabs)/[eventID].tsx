@@ -26,7 +26,7 @@ export default function ModalView() {
   const {
     data: event,
     refetch,
-    loading,
+    loading: loadingEvent,
   } = useAppwrite(() => getEventByID(eventID));
 
   const { user } = useGlobalContext();
@@ -38,12 +38,15 @@ export default function ModalView() {
     await refetchEventLikes();
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>;
+  if (loadingEvent) {
+    // TODO: Loading event data component
+    return <Text>Loading event data...</Text>;
   }
 
-  if (loadingEventLikes) return <Text>loading event likes...</Text>;
-
+  if (loadingEventLikes) {
+    // TODO: Loading likes data component
+    return <Text>loading event likes...</Text>;
+  }
   console.log(event);
 
   return (
@@ -51,7 +54,10 @@ export default function ModalView() {
       <SafeAreaView>
         <ScrollView
           refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+            <RefreshControl
+              refreshing={loadingEvent}
+              onRefresh={handleRefresh}
+            />
           }
         >
           <View className="p-2">
