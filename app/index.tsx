@@ -92,7 +92,7 @@ const Welcome = () => {
 
         <Text className="text-gray-100 mt-6">
           is this your first time?{" "}
-          <Link className="text-[#7F6AF3]" href={"/"}>
+          <Link className="text-[#7F6AF3]" href={"/(auth)/sign-up"}>
             Come here and join us
           </Link>
         </Text>

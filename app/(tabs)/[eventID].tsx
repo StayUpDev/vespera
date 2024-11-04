@@ -9,12 +9,17 @@ import {
   getEventLikesByEventID,
   searchEvents,
 } from "../../lib/clients/evento";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  RefreshControl,
+  ScrollView,
+} from "react-native-gesture-handler";
 import useAppwrite from "../../lib/useAppwrite";
 import { CustomButton } from "../../components";
 import { getCurrentUser } from "../../lib/clients/user";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getUserEventLikeItem } from "../../utils/event";
+import useEventLikes from "../../hooks/useEventLikes";
 
 export default function ModalView() {
   const { eventID }: { eventID: string } = useLocalSearchParams();
@@ -25,28 +30,12 @@ export default function ModalView() {
   } = useAppwrite(() => getEventByID(eventID));
 
   const { user } = useGlobalContext();
+  const { eventLikes, loadingEventLikes, handleUserLike, refetchEventLikes } =
+    useEventLikes(eventID, user);
 
-  const {
-    data: eventLikes,
-    refetch: refetchEventLikes,
-    loading: loadingEventLikes,
-  } = useAppwrite(() => getEventLikesByEventID(eventID));
-
-  const handleUserLike = async () => {
-    if (user && eventLikes) {
-      const userEventLikeItem = getUserEventLikeItem(eventLikes, user.$id);
-
-      console.log("user event like item: ", userEventLikeItem);
-
-      if (userEventLikeItem) {
-        const result = await deleteEventUserLike(userEventLikeItem.$id);
-
-        if (!!result) await refetchEventLikes();
-      } else {
-        const data = await createEventUserLike(eventID, user.$id);
-        if (!!data) await refetchEventLikes();
-      }
-    }
+  const handleRefresh = async () => {
+    await refetch();
+    await refetchEventLikes();
   };
 
   if (loading) {
@@ -60,40 +49,27 @@ export default function ModalView() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView>
-        <View className="p-2">
-          <Text>{event.label}</Text>
-          <View>
-            <Image
-              source={{ uri: event.thumbnail }}
-              style={{ width: 200, height: 200 }}
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+          }
+        >
+          <View className="p-2">
+            <Text>{event.label}</Text>
+            <View>
+              <Image
+                source={{ uri: event.thumbnail }}
+                style={{ width: 200, height: 200 }}
+              />
+            </View>
+            <Text>{event.description}</Text>
+            <CustomButton
+              title={`likes: ${eventLikes.length}`}
+              handlePress={handleUserLike}
             />
           </View>
-          <Text>{event.description}</Text>
-          <CustomButton
-            title={`likes: ${eventLikes.length}`}
-            handlePress={handleUserLike}
-          />
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </GestureHandlerRootView>
   );
 }
-const styles = StyleSheet.create({
-  rightAction: {
-    width: 100,
-    height: 50,
-    backgroundColor: "purple",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  swipeable: {
-    height: 50,
-    backgroundColor: "papayawhip",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  swipeableText: {
-    padding: 20,
-    fontSize: 16,
-  },
-});
