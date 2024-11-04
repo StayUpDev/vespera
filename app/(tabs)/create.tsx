@@ -10,6 +10,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from "react-native";
 
 import { icons } from "../../constants";
@@ -18,8 +19,26 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 import { Evento } from "../../constants/types";
 import { DocumentPickerAsset } from "expo-document-picker";
 import { createEvent } from "../../lib/clients/evento";
+import { Picker } from "@react-native-picker/picker";
+import CustomModal from "../../components/Modal";
+import * as ImagePicker from "expo-image-picker";
+
+// TODO: per ora le categorie sono hardcoded
+const categories = [
+  "Music",
+  "Art",
+  "Food",
+  "Sports",
+  "Tech",
+  "Fashion",
+  "Health",
+  "Education",
+  "Travel",
+  "Science",
+];
 
 export type CreateEvento = {
+  description: string;
   category: string;
   costo: number;
   dateFrom: Date;
@@ -27,13 +46,17 @@ export type CreateEvento = {
   label: string;
   parcheggio: boolean;
   tags: string[];
-  thumbnail: DocumentPickerAsset;
+  thumbnail: ImagePicker.ImagePickerAsset;
   userID: string;
 };
 const Create = () => {
   const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false);
+
+  const [isChoosingCategory, setIsChoosingCategory] = useState(false);
+
   const [event, setEvent] = useState<CreateEvento>({
+    description: "",
     category: "",
     costo: null,
     dateFrom: new Date(),
@@ -46,10 +69,12 @@ const Create = () => {
   });
 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: ["image/png", "image/jpg"],
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
-
     if (!result.canceled) {
       if (selectType === "image") {
         setEvent({
@@ -81,6 +106,7 @@ const Create = () => {
       Alert.alert("Error", error.message);
     } finally {
       setEvent({
+        description: "",
         category: "",
         costo: null,
         dateFrom: new Date(),
@@ -110,21 +136,44 @@ const Create = () => {
           handleChangeText={(e) => setEvent({ ...event, label: e })}
           otherStyles="mt-10"
         />
+        {/* TODO: areaview */}
+        <FormField
+          title="Descrizione evento"
+          value={event.description}
+          placeholder="Dai una descrizione al tuo evento..."
+          handleChangeText={(e) => setEvent({ ...event, description: e })}
+          otherStyles="mt-10"
+        />
 
-        <View className="mt-7 space-y-2">
-          <TouchableOpacity onPress={() => openPicker("image")}>
-            <View className="w-full h-40 px-4 bg-black-100 rounded-2xl border border-black-200 flex justify-center items-center">
-              <View className="w-14 h-14 border border-dashed border-secondary-100 flex justify-center items-center">
-                <Image
-                  source={icons.upload}
-                  resizeMode="contain"
-                  alt="upload"
-                  className="w-1/2 h-1/2"
-                />
-              </View>
+        {isChoosingCategory ? (
+          <CustomModal
+            onClose={() => setIsChoosingCategory(false)}
+            title="Scegli la categoria del tuo evento"
+            visible={isChoosingCategory}
+          >
+            <View className="w-full h-full">
+              <Picker
+                selectedValue={event.category}
+                onValueChange={(itemValue, itemIndex) =>
+                  setEvent({ ...event, category: itemValue })
+                }
+              >
+                {categories.map((category) => (
+                  <Picker.Item
+                    label={category}
+                    value={category}
+                    key={category}
+                  />
+                ))}
+              </Picker>
             </View>
-          </TouchableOpacity>
-        </View>
+          </CustomModal>
+        ) : (
+          <CustomButton
+            handlePress={() => setIsChoosingCategory(true)}
+            title={event.category || "Scegli una categoria"}
+          />
+        )}
 
         <View className="mt-7 space-y-2">
           <Text className="text-base text-gray-100 font-pmedium">

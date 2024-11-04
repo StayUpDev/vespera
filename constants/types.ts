@@ -7,6 +7,7 @@ export type AppwriteResponse<T> = {
 export type Evento = {
   $id: string;
   label: string;
+  description: string;
   dateFrom: Date;
   dateTo: Date;
   category: string;
@@ -16,6 +17,12 @@ export type Evento = {
   dressCode?: string;
   tags: string[];
   thumbnail: string;
+};
+
+export type EventoLike = {
+  $id: string;
+  eventoID: string;
+  userID: string;
 };
 
 export type User = {
@@ -39,6 +46,7 @@ export type UserEventoCommento = {
 };
 
 export type UserEventoLike = {
+  $id: string;
   eventoID: string;
   userID: string;
 };

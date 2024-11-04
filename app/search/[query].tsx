@@ -3,11 +3,11 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import useAppwrite from "../../lib/useAppwrite";
 import { EmptyState, SearchInput, VideoCard } from "../../components";
 import EventCard from "../../components/EventCard";
 import { Evento } from "../../constants/types";
 import { searchEvents } from "../../lib/clients/evento";
+import useAppwrite from "../../lib/useAppwrite";
 
 const Search = () => {
   const { query }: { query: string } = useLocalSearchParams();
@@ -24,6 +24,7 @@ const Search = () => {
         keyExtractor={(item: Evento) => item.$id}
         renderItem={({ item }: { item: Evento }) => (
           <EventCard
+            eventID={item.$id}
             category={item.category}
             label={item.label}
             thumbnail={item.thumbnail}

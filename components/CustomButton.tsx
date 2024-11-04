@@ -18,7 +18,6 @@ const CustomButton = ({
   isLoading = false,
 }) => {
   const { scaleValue, shadowStyle, animateIn, animateOut } = useButtonAnimation();
-  console.log(shadowStyle);
   return (
     <TouchableOpacity
     

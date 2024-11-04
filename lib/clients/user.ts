@@ -67,11 +67,9 @@ export async function getAccount() {
 
 // Get Current User
 export async function getCurrentUser() {
-  console.log("getting current user");
   try {
     const currentAccount = await getAccount();
 
-    console.log("current account: ", currentAccount);
     if (!currentAccount) throw Error;
 
     const currentUser: AppwriteResponse<User> = await databases.listDocuments(
@@ -96,6 +94,23 @@ export async function signOut() {
     const session = await account.deleteSession("current");
 
     return session;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function getUserByID(userID: string) {
+  try {
+    const events: AppwriteResponse<User> = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.search("$id", userID)]
+    );
+
+    if (!events) throw new Error("Something went wrong");
+
+    if (events.documents.length === 0) throw new Error("Something went wrong");
+    return events.documents[0];
   } catch (error) {
     throw new Error(error);
   }

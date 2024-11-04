@@ -1,10 +1,11 @@
 import { ID, Storage } from "react-native-appwrite";
 import { appwriteConfig, getAppwriteClient } from "../appwrite";
+import { ImagePickerAsset } from "expo-image-picker";
 
 const storage = new Storage(getAppwriteClient());
 
 // Upload File
-export async function uploadFile(file, type) {
+export async function uploadFile(file: ImagePickerAsset) {
   if (!file) return;
 
   const { mimeType, ...rest } = file;
@@ -17,7 +18,7 @@ export async function uploadFile(file, type) {
       asset
     );
 
-    const fileUrl = await getFilePreview(uploadedFile.$id, type);
+    const fileUrl = await getFilePreview(uploadedFile.$id, "image");
     return fileUrl;
   } catch (error) {
     throw new Error(error);
