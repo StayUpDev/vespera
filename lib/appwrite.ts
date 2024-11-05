@@ -1,5 +1,4 @@
-import { Client, Databases, Query } from "react-native-appwrite";
-import { AppwriteResponse, Evento, User } from "../constants/types";
+import { Client } from "react-native-appwrite";
 
 export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,

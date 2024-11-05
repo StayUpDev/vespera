@@ -16,11 +16,11 @@ const CustomButton = ({
   containerStyles = "",
   textStyles = "",
   isLoading = false,
-}) => {
-  const { scaleValue, shadowStyle, animateIn, animateOut } = useButtonAnimation();
+}: CustomButtonProps) => {
+  const { scaleValue, shadowStyle, animateIn, animateOut } =
+    useButtonAnimation();
   return (
     <TouchableOpacity
-    
       onPress={handlePress}
       onPressIn={animateIn}
       onPressOut={animateOut}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
-import clsx from "clsx";
+import React from "react";
 
 interface FormFieldProps {
   title: string;
@@ -11,16 +11,13 @@ interface FormFieldProps {
   placeholder?: string;
   handleChangeText: (text: string) => void;
   otherStyles?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 const FormField = ({
-  title,
   type,
   value,
   placeholder,
   handleChangeText,
-  otherStyles,
-  ...props
 }: FormFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -30,13 +27,10 @@ const FormField = ({
   return (
     <View className={`w-full`}>
       <View className="relative h-16 rounded-full w-full bg-[#313131] mb-4">
-
         {!isFocused && !value && (
-
           <Text className="absolute h-full p-5 rounded-full opacity-50 bg-transparent text-white font-plight text-base">
             {placeholder}
           </Text>
-          
         )}
 
         <TextInput
@@ -58,8 +52,6 @@ const FormField = ({
           </TouchableOpacity>
         )}
       </View>
-
-      
     </View>
   );
 };

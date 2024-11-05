@@ -1,10 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity, Image, Text } from "react-native";
 
-import { icons } from "../constants";
 import CustomButton from "./CustomButton";
-import { Redirect } from "expo-router";
-import { useGlobalContext } from "../context/GlobalProvider";
 import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
 import { Evento } from "../constants/types";
@@ -20,7 +17,7 @@ const EventCard = ({
 }: EventCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { data, loading } = useAppwrite(() => getUserByID(userID));
+  const { data } = useAppwrite(() => getUserByID(userID));
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -161,53 +158,6 @@ const EventCard = ({
         </View>
       </View>
     </>
-  );
-};
-
-const _EventCard = ({
-  category,
-  label,
-  thumbnail,
-  userID,
-}: {
-  category: string;
-  label: string;
-  thumbnail: string;
-  userID: string;
-}) => {
-  return (
-    <View className="flex flex-col items-center px-4 mb-14">
-      <View className="flex flex-row gap-3 items-start">
-        <View className="flex justify-center items-center">
-          <View className="w-[46px] h-full rounded-lg border border-secondary flex justify-center items-center p-0.5">
-            <Image
-              source={{ uri: thumbnail }}
-              className="w-full h-full rounded-lg"
-              resizeMode="cover"
-            />
-          </View>
-
-          <View className="flex justify-center flex-1 ml-3 gap-y-1">
-            <Text
-              className="font-psemibold text-sm text-white"
-              numberOfLines={1}
-            >
-              {label}
-            </Text>
-            <Text
-              className="text-xs text-gray-100 font-pregular"
-              numberOfLines={1}
-            >
-              {userID}
-            </Text>
-          </View>
-        </View>
-
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-        </View>
-      </View>
-    </View>
   );
 };
 

@@ -4,12 +4,12 @@ import { View, Image, FlatList, TouchableOpacity } from "react-native";
 
 import { icons } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { EmptyState, InfoBox, VideoCard } from "../../components";
+import { EmptyState, InfoBox } from "../../components";
 import EventCard from "../../components/EventCard";
-import { Evento } from "../../constants/types";
 import { signOut } from "../../lib/clients/user";
 import { getUserEvents } from "../../lib/clients/evento";
 import useAppwrite from "../../lib/useAppwrite";
+import React from "react";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
@@ -27,8 +27,8 @@ const Profile = () => {
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={events}
-        keyExtractor={(item: Evento) => item.$id}
-        renderItem={({ item }: { item: Evento }) => <EventCard event={item} />}
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }: { item }) => <EventCard event={item} />}
         ListEmptyComponent={() => (
           <EmptyState title="Nessun evento" subtitle="Nessun evento trovato" />
         )}

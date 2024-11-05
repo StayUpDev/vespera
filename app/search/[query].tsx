@@ -3,11 +3,12 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { EmptyState, SearchInput, VideoCard } from "../../components";
+import { EmptyState, SearchInput } from "../../components";
 import EventCard from "../../components/EventCard";
-import { Evento } from "../../constants/types";
+import { type Evento } from "../../constants/types";
 import { searchEvents } from "../../lib/clients/evento";
 import useAppwrite from "../../lib/useAppwrite";
+import React from "react";
 
 const Search = () => {
   const { query }: { query: string } = useLocalSearchParams();
@@ -21,15 +22,9 @@ const Search = () => {
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={posts}
-        keyExtractor={(item: Evento) => item.$id}
-        renderItem={({ item }: { item: Evento }) => (
-          <EventCard
-            eventID={item.$id}
-            category={item.category}
-            label={item.label}
-            thumbnail={item.thumbnail}
-            userID={item.userID}
-          />
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }: { item }) => (
+          <EventCard event={item as Evento} />
         )}
         ListHeaderComponent={() => (
           <>

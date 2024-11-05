@@ -1,13 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { Link, Redirect, router } from "expo-router";
-import { View, Text, Image, ScrollView, Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { images } from "../constants";
 import { CustomButton, FormField, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { useState } from "react";
 import { getCurrentUser, signIn } from "../lib/clients/user";
+import React from "react";
 
 const Welcome = () => {
   const { setUser, setIsLogged } = useGlobalContext();

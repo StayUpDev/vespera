@@ -8,6 +8,7 @@ import {
 import { getUserEventLikeItem } from "../utils/event";
 import { EventoLike, User } from "../constants/types";
 
+// TODO: Fix types
 export const useOptimisticEventLikes = (eventID: string, user: User) => {
   const {
     data: initialEventLikes,

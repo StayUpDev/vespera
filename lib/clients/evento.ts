@@ -1,8 +1,7 @@
 import { Databases, Query, ID } from "react-native-appwrite";
-import { CreateEvento } from "../../app/(tabs)/create";
 import { uploadFile } from "./file";
 import { appwriteConfig, getAppwriteClient } from "../appwrite";
-import { AppwriteResponse, Evento, EventoLike } from "../../constants/types";
+import { CreateEvento } from "../../constants/types";
 
 const databases = new Databases(getAppwriteClient());
 
@@ -38,7 +37,7 @@ export async function createEvent(evento: CreateEvento) {
 // Get all video Posts
 export async function getAllEvents() {
   try {
-    const posts: AppwriteResponse<Evento> = await databases.listDocuments(
+    const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.eventoCollectionId,
       [Query.orderDesc("$createdAt")]
@@ -53,7 +52,7 @@ export async function getAllEvents() {
 // Get video posts created by user
 export async function getUserEvents(userId: string) {
   try {
-    const events: AppwriteResponse<Evento> = await databases.listDocuments(
+    const events = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.eventoCollectionId,
       [Query.equal("userID", userId)]
@@ -65,9 +64,9 @@ export async function getUserEvents(userId: string) {
   }
 }
 
-export async function getEventByID(eventID: string): Promise<Evento> {
+export async function getEventByID(eventID: string) {
   try {
-    const events: AppwriteResponse<Evento> = await databases.listDocuments(
+    const events = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.eventoCollectionId,
       [Query.search("$id", eventID)]
@@ -85,7 +84,7 @@ export async function getEventByID(eventID: string): Promise<Evento> {
 
 export async function searchEvents(query: string) {
   try {
-    const events: AppwriteResponse<Evento> = await databases.listDocuments(
+    const events = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.eventoCollectionId,
       [Query.search("label", query)]
@@ -101,7 +100,7 @@ export async function searchEvents(query: string) {
 
 export async function getLatestEvents() {
   try {
-    const events: AppwriteResponse<Evento> = await databases.listDocuments(
+    const events = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.eventoCollectionId,
       [Query.orderDesc("$createdAt"), Query.limit(7)]
@@ -115,7 +114,7 @@ export async function getLatestEvents() {
 
 export async function getEventLikesByEventID(eventID: string) {
   try {
-    const events: AppwriteResponse<EventoLike> = await databases.listDocuments(
+    const events = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userEventLikeCollectionId,
       [Query.search("eventoID", eventID)]
@@ -129,7 +128,7 @@ export async function getEventLikesByEventID(eventID: string) {
   }
 }
 
-export async function createEventUserLike(eventID: String, userID: String) {
+export async function createEventUserLike(eventID: string, userID: string) {
   try {
     const newEvento = await databases.createDocument(
       appwriteConfig.databaseId,

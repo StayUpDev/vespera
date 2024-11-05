@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Modal, View, Text, StyleSheet, Button } from "react-native";
+import { Modal, View, Text, StyleSheet } from "react-native";
 import CustomButton from "./CustomButton";
 
 interface CustomModalProps {

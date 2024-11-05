@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { router, usePathname } from "expo-router";
 import { View, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import React from "react";
 
 import { icons } from "../constants";
 
 const SearchInput = ({
   initialQuery,
-  refetch,
 }: {
   initialQuery?: string;
   refetch?: () => Promise<void>;

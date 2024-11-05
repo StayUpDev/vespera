@@ -1,7 +1,6 @@
 import { ID, Storage } from "react-native-appwrite";
 import { appwriteConfig, getAppwriteClient } from "../appwrite";
-import { ImagePickerAsset } from "expo-image-picker";
-import { ImageAsset } from "../../constants/types";
+import { type ImageAsset } from "../../constants/types";
 
 const storage = new Storage(getAppwriteClient());
 

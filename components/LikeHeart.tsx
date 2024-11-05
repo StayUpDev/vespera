@@ -1,7 +1,6 @@
-import { View, Text } from "react-native";
 import React, { Fragment } from "react";
+import { Text } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { useOptimisticEventLikes } from "../hooks/useEventLikes";
 import { getUserEventLikeItem } from "../utils/event";
 import { useGlobalContext } from "../context/GlobalProvider";

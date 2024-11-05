@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { router } from "expo-router";
-import { ResizeMode, Video } from "expo-av";
-import * as DocumentPicker from "expo-document-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
@@ -10,20 +8,18 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Modal,
 } from "react-native";
 
 import { icons } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { CreateEvento, Evento, ImageAsset } from "../../constants/types";
-import { DocumentPickerAsset } from "expo-document-picker";
+import { type CreateEvento } from "../../constants/types";
 import { createEvent } from "../../lib/clients/evento";
 import { Picker } from "@react-native-picker/picker";
 import CustomModal from "../../components/Modal";
-import * as ImagePicker from "expo-image-picker";
 import { getEmptyEventState } from "../../utils/event";
 import { openPicker } from "../../utils/event/create";
+import React from "react";
 
 // TODO: per ora le categorie sono hardcoded
 const categories = [
@@ -110,7 +106,7 @@ const Create = () => {
             <View className="w-full h-full">
               <Picker
                 selectedValue={event.category}
-                onValueChange={(itemValue, itemIndex) =>
+                onValueChange={(itemValue) =>
                   setEvent({ ...event, category: itemValue })
                 }
               >
