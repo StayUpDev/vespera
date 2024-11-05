@@ -40,6 +40,7 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-white px-2 ">
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={events}
         keyExtractor={(item: Evento) => item.$id}
         renderItem={({ item }: { item: Evento }) => (
