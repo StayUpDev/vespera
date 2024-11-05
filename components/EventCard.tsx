@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { View, TouchableOpacity, Image, Text } from "react-native";
 
 import { icons } from "../constants";
@@ -7,20 +7,15 @@ import { Redirect } from "expo-router";
 import { useGlobalContext } from "../context/GlobalProvider";
 import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
+import { Evento } from "../constants/types";
+import CustomLabel from "./CustomLabel";
 
+interface EventCardProps {
+  event: Evento;
+}
 const EventCard = ({
-  eventID,
-  category,
-  label,
-  thumbnail,
-  userID,
-}: {
-  eventID: string;
-  category: string;
-  label: string;
-  thumbnail: string;
-  userID: string;
-}) => {
+  event: { category, label, thumbnail, userID, description, $id: eventID },
+}: EventCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -69,26 +64,25 @@ const EventCard = ({
           </View>
         </View>
         <View className="description pl-3 mt-3 h-min">
-          <Text className="text-gray-500 text-sm font-pregular">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            bibendum, turpis nec ultricies tristique,{" "}
-            <Text className="text-secondary-100 font-pmedium">
-              view more...
+          {description ? (
+            <Text className="text-gray-500 text-sm font-pregular">
+              {description}
             </Text>
-          </Text>
+          ) : (
+            <Text className="text-gray-500 text-sm font-pregular">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              bibendum, turpis nec ultricies tristique,{" "}
+              <Text className="text-secondary-100 font-pmedium">
+                view more...
+              </Text>
+            </Text>
+          )}
         </View>
         <View className="extrainfo flex flex-row px-2 mt-3 justify-between mb-2">
           <View className="flex flex-row gap-1 items-center max-w-[75%]">
-            <View className=" bg-secondary-200 rounded-full w-min h-6 flex justify-center">
-              <Text className="text-white text-xs font-pmedium text-center px-3">
-                Aperitivo{/*TODO: max length for label 10 characters*/}
-              </Text>
-            </View>
-            <View className=" bg-secondary-200 rounded-full w-min h-6 flex justify-center">
-              <Text className="text-white text-xs font-pmedium text-center px-3">
-                Aperitivo
-              </Text>
-            </View>
+            {category && <CustomLabel label={category} />}
+            {/* fake data */}
+            <CustomLabel label="aperitivo" />
           </View>
           <View className="flex flex-row">
             <View>

@@ -25,6 +25,7 @@ export async function createEvent(evento: CreateEvento) {
         tags: evento.tags,
         thumbnail: thumbnailUrl,
         userID: evento.userID,
+        description: evento.description,
       }
     );
 

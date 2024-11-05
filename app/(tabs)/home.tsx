@@ -43,15 +43,7 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         data={events}
         keyExtractor={(item: Evento) => item.$id}
-        renderItem={({ item }: { item: Evento }) => (
-          <EventCard
-            eventID={item.$id}
-            category={item.category}
-            label={item.label}
-            thumbnail={item.thumbnail}
-            userID={item.userID}
-          />
-        )}
+        renderItem={({ item }: { item: Evento }) => <EventCard event={item} />}
         ListHeaderComponent={() => (
           <View className="flex my-6 px-4 space-y-6 w-full">
             <View className="flex justify-between items-start flex-row mb-6 w-full">

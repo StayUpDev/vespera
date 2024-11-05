@@ -5,16 +5,13 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { icons } from "../../constants";
 import { Loader } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import Feather from "@expo/vector-icons/Feather";
 
-const TabIcon = ({ icon, color, name, focused }) => {
+const TabIcon = ({ Icon, color, name, focused }) => {
   return (
     <View className="flex items-center justify-center gap-2">
-      <Image
-        source={icon}
-        resizeMode="contain"
-        tintColor={color}
-        className="w-6 h-6"
-      />
+      {Icon}
+
       <Text
         className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
         style={{ color: color }}
@@ -34,13 +31,13 @@ const TabLayout = () => {
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#FFA001",
-          tabBarInactiveTintColor: "#CDCDE0",
+          tabBarActiveTintColor: "#7F6AF3",
+          tabBarInactiveTintColor: "#292929",
           tabBarShowLabel: false,
           tabBarStyle: {
-            backgroundColor: "#161622",
+            backgroundColor: "#fdfdfd",
             borderTopWidth: 1,
-            borderTopColor: "#232533",
+            borderTopColor: "#fdfdfd",
             height: 84,
           },
         }}
@@ -52,7 +49,14 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.home}
+                Icon={
+                  <Feather
+                    name="home"
+                    size={24}
+                    // no... passa il nome della icona e basta.
+                    color={`${focused ? "#7F6AF3" : "#292929"}`}
+                  />
+                }
                 color={color}
                 name="Home"
                 focused={focused}
@@ -67,7 +71,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.bookmark}
+                Icon={<Feather name="search" size={24} color="#292929" />}
                 color={color}
                 name="Bookmark"
                 focused={focused}
@@ -91,7 +95,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.plus}
+                Icon={<Feather name="plus" size={24} color="#292929" />}
                 color={color}
                 name="Create"
                 focused={focused}
@@ -107,7 +111,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.profile}
+                Icon={<Feather name="user" size={24} color="#292929" />}
                 color={color}
                 name="Profile"
                 focused={focused}
