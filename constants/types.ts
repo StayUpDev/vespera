@@ -63,3 +63,16 @@ export type ImageAsset = {
   uri: string;
   mimeType: string;
 };
+
+export type CreateEvento = {
+  description: string;
+  category: string;
+  costo: number;
+  dateFrom: Date;
+  dateTo: Date;
+  label: string;
+  parcheggio: boolean;
+  tags: string[];
+  thumbnail: ImageAsset;
+  userID: string;
+};

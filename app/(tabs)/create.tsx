@@ -16,12 +16,14 @@ import {
 import { icons } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { Evento, ImageAsset } from "../../constants/types";
+import { CreateEvento, Evento, ImageAsset } from "../../constants/types";
 import { DocumentPickerAsset } from "expo-document-picker";
 import { createEvent } from "../../lib/clients/evento";
 import { Picker } from "@react-native-picker/picker";
 import CustomModal from "../../components/Modal";
 import * as ImagePicker from "expo-image-picker";
+import { getEmptyEventState } from "../../utils/event";
+import { openPicker } from "../../utils/event/create";
 
 // TODO: per ora le categorie sono hardcoded
 const categories = [
@@ -37,68 +39,11 @@ const categories = [
   "Science",
 ];
 
-export type CreateEvento = {
-  description: string;
-  category: string;
-  costo: number;
-  dateFrom: Date;
-  dateTo: Date;
-  label: string;
-  parcheggio: boolean;
-  tags: string[];
-  thumbnail: ImageAsset;
-  userID: string;
-};
 const Create = () => {
   const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false);
-
   const [isChoosingCategory, setIsChoosingCategory] = useState(false);
-
-  const [event, setEvent] = useState<CreateEvento>({
-    description: "",
-    category: "",
-    costo: null,
-    dateFrom: new Date(),
-    dateTo: new Date(),
-    label: "",
-    parcheggio: false,
-    tags: [],
-    thumbnail: null,
-    userID: user.$id,
-  });
-
-  const openPicker = async (selectType: "image" | "video") => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled && result.assets) {
-      const { uri, mimeType, fileName, fileSize } = result.assets[0];
-
-      const asset: ImageAsset = {
-        name: fileName ?? "default_name.jpg",
-        type: mimeType ?? "image/jpeg",
-        size: fileSize ?? 0,
-        uri: uri,
-        mimeType: mimeType ?? "image/jpeg",
-      };
-
-      if (selectType === "image") {
-        setEvent({
-          ...event,
-          thumbnail: asset,
-        });
-      } else {
-        Alert.alert("Video not supported yet");
-      }
-    } else {
-      Alert.alert("Document picker canceled");
-    }
-  };
+  const [event, setEvent] = useState<CreateEvento>(getEmptyEventState());
 
   const submit = async () => {
     if (event.label === "" || !event.thumbnail) {
@@ -191,7 +136,7 @@ const Create = () => {
             Thumbnail
           </Text>
 
-          <TouchableOpacity onPress={() => openPicker("image")}>
+          <TouchableOpacity onPress={() => openPicker(event, setEvent)}>
             {event.thumbnail ? (
               <Image
                 source={{ uri: event.thumbnail.uri }}

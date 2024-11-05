@@ -9,6 +9,8 @@ import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
 import { Evento } from "../constants/types";
 import CustomLabel from "./CustomLabel";
+import { getUserByID } from "../lib/clients/user";
+import useAppwrite from "../lib/useAppwrite";
 
 interface EventCardProps {
   event: Evento;
@@ -17,6 +19,8 @@ const EventCard = ({
   event: { category, label, thumbnail, userID, description, $id: eventID },
 }: EventCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const { data, loading } = useAppwrite(() => getUserByID(userID));
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -33,8 +37,20 @@ const EventCard = ({
         }}
         className="flex flex-col p-2 w-min justify-between bg-light h-min rounded-3xl mb-6 mx-2"
       >
-        <View className="px-2 pt-1 title h-fit">
+        <View className="px-2 pt-1 title h-fit flex flex-col">
           <Text className="text-primary text-3xl font-pmedium ">{label}</Text>
+          {/* user display component... */}
+          <View className="flex flex-row gap-2 items-center">
+            <Image
+              source={{ uri: data?.avatar }}
+              className="w-[40px] h-[40px] rounded-full"
+              resizeMode="cover"
+            />
+
+            <Text className="text-primary  font-pmedium ">
+              {data?.username}
+            </Text>
+          </View>
         </View>
         <View className="image mt-2 h-max relative rounded-3xl bg-red-400">
           <Image
