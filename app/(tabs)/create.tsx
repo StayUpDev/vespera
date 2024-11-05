@@ -16,7 +16,7 @@ import {
 import { icons } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { Evento } from "../../constants/types";
+import { Evento, ImageAsset } from "../../constants/types";
 import { DocumentPickerAsset } from "expo-document-picker";
 import { createEvent } from "../../lib/clients/evento";
 import { Picker } from "@react-native-picker/picker";
@@ -46,7 +46,7 @@ export type CreateEvento = {
   label: string;
   parcheggio: boolean;
   tags: string[];
-  thumbnail: ImagePicker.ImagePickerAsset;
+  thumbnail: ImageAsset;
   userID: string;
 };
 const Create = () => {
@@ -68,24 +68,35 @@ const Create = () => {
     userID: user.$id,
   });
 
-  const openPicker = async (selectType) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+  const openPicker = async (selectType: "image" | "video") => {
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.canceled) {
+
+    if (!result.canceled && result.assets) {
+      const { uri, mimeType, fileName, fileSize } = result.assets[0];
+
+      const asset: ImageAsset = {
+        name: fileName ?? "default_name.jpg",
+        type: mimeType ?? "image/jpeg",
+        size: fileSize ?? 0,
+        uri: uri,
+        mimeType: mimeType ?? "image/jpeg",
+      };
+
       if (selectType === "image") {
         setEvent({
           ...event,
-          thumbnail: result.assets[0],
+          thumbnail: asset,
         });
+      } else {
+        Alert.alert("Video not supported yet");
       }
     } else {
-      setTimeout(() => {
-        Alert.alert("Document picked", JSON.stringify(result, null, 2));
-      }, 100);
+      Alert.alert("Document picker canceled");
     }
   };
 

@@ -55,3 +55,11 @@ export type UserEventoSubscriber = {
   eventoID: string;
   userID: string;
 };
+
+export type ImageAsset = {
+  name: string;
+  type: string;
+  size: number;
+  uri: string;
+  mimeType: string;
+};

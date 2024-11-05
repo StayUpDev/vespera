@@ -39,7 +39,8 @@ export async function getAllEvents() {
   try {
     const posts: AppwriteResponse<Evento> = await databases.listDocuments(
       appwriteConfig.databaseId,
-      appwriteConfig.eventoCollectionId
+      appwriteConfig.eventoCollectionId,
+      [Query.orderDesc("$createdAt")]
     );
 
     return posts.documents;
