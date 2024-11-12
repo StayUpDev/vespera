@@ -10,15 +10,12 @@ export async function uploadFile(file: ImageAsset) {
   const { mimeType, ...rest } = file;
   const asset = { type: mimeType, ...rest };
 
-  console.log("Uploading file", asset);
   try {
     const uploadedFile = await storage.createFile(
       appwriteConfig.storageId,
       ID.unique(),
       asset
     );
-
-    console.log("Uploaded file", uploadedFile);
 
     const fileUrl = await getFilePreview(uploadedFile.$id, "image");
     return fileUrl;

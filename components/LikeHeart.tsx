@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { Text } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { useOptimisticEventLikes } from "../hooks/useEventLikes";
-import { getUserEventLikeItem } from "../utils/event";
 import { useGlobalContext } from "../context/GlobalProvider";
+import { getUserEventItem } from "../utils/event";
 
 interface LikeHeartProps {
   eventID: string;
@@ -16,9 +16,7 @@ export default function LikeHeart({ eventID }: LikeHeartProps) {
     user
   );
 
-  const isEventLiked = getUserEventLikeItem(eventLikes, user.$id)
-    ? true
-    : false;
+  const isEventLiked = getUserEventItem(eventLikes, user?.$id) ? true : false;
 
   const totalLikes = eventLikes ? eventLikes.length : 0;
 

@@ -61,12 +61,14 @@ const Profile = () => {
             />
 
             <View className="mt-5 flex flex-row">
-              <InfoBox
-                title={events.length || 0}
-                subtitle="Events"
-                titleStyles="text-xl"
-                containerStyles="mr-10"
-              />
+              {events && (
+                <InfoBox
+                  title={events.length || 0}
+                  subtitle="Events"
+                  titleStyles="text-xl"
+                  containerStyles="mr-10"
+                />
+              )}
               <InfoBox
                 containerStyles={null}
                 title="1.2k"

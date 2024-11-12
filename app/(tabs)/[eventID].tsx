@@ -1,12 +1,8 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
-import {
-  getEventByID,
-  getEventLikesByEventID,
-  searchEvents,
-} from "../../lib/clients/evento";
+import { getEventByID } from "../../lib/clients/evento";
 import {
   GestureHandlerRootView,
   RefreshControl,
@@ -14,9 +10,7 @@ import {
 } from "react-native-gesture-handler";
 import useAppwrite from "../../lib/useAppwrite";
 import { CustomButton } from "../../components";
-import { getCurrentUser } from "../../lib/clients/user";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { getUserEventLikeItem } from "../../utils/event";
 import { useOptimisticEventLikes } from "../../hooks/useEventLikes";
 
 export default function ModalView() {

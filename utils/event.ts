@@ -1,10 +1,10 @@
 import { CreateEvento, UserEventoLike } from "../constants/types";
 
-export function getUserEventLikeItem(
+export function getUserEventItem(
   userEventLikes: UserEventoLike[],
   userID: string
 ) {
-  return userEventLikes.find((like) => like.userID === userID);
+  return userEventLikes.find((item) => item.userID === userID);
 }
 
 export function getEmptyEventState(): CreateEvento {

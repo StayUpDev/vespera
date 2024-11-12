@@ -128,6 +128,22 @@ export async function getEventLikesByEventID(eventID: string) {
   }
 }
 
+export async function getEventSubscribersByEventID(eventID: string) {
+  try {
+    const events = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userEventSubscribeCollectionId,
+      [Query.search("eventoID", eventID)]
+    );
+
+    if (!events) throw new Error("Something went wrong");
+
+    return events.documents;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function createEventUserLike(eventID: string, userID: string) {
   try {
     const newEvento = await databases.createDocument(
@@ -152,6 +168,42 @@ export async function deleteEventUserLike(eventUserLikeID: string) {
     const evento = await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userEventLikeCollectionId,
+      eventUserLikeID
+    );
+
+    return evento;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function createEventUserSubscriber(
+  eventID: string,
+  userID: string
+) {
+  try {
+    const newEvento = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userEventSubscribeCollectionId,
+      ID.unique(),
+
+      {
+        eventoID: eventID,
+        userID,
+      }
+    );
+
+    return newEvento;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function deleteEventUserSubscriber(eventUserLikeID: string) {
+  try {
+    const evento = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userEventSubscribeCollectionId,
       eventUserLikeID
     );
 

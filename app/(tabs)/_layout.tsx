@@ -85,15 +85,6 @@ const TabLayout = () => {
             ),
           }}
         />
-
-        <Tabs.Screen
-          name="[eventID]"
-          options={{
-            title: "Create",
-            headerShown: false,
-            href: null,
-          }}
-        />
         <Tabs.Screen
           name="create"
           options={{
@@ -109,7 +100,6 @@ const TabLayout = () => {
             ),
           }}
         />
-
         <Tabs.Screen
           name="profile"
           options={{

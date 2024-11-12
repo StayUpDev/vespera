@@ -14,6 +14,8 @@ export const appwriteConfig = {
     process.env.EXPO_PUBLIC_APPWRITE_USER_EVENTO_COMMENTO_COLLECTION_ID,
   userEventLikeCollectionId:
     process.env.EXPO_PUBLIC_APPWRITE_USER_EVENTO_LIKE_COLLECTION_ID,
+  userEventSubscribeCollectionId:
+    process.env.EXPO_PUBLIC_APPWRITE_USER_EVENTO_SUBSCRIBER_COLLECTION_ID,
 };
 
 // Client should be globally defined here and then exported

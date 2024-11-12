@@ -8,8 +8,9 @@ import React from "react";
 const AuthLayout = () => {
   const { loading, isLogged } = useGlobalContext();
 
-  if (!loading && isLogged) return <Redirect href="/home" />;
-
+  if (!loading && isLogged) {
+    return <Redirect href="/home" />;
+  }
   return (
     <>
       <Stack>

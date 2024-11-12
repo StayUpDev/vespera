@@ -5,7 +5,7 @@ import {
   deleteEventUserLike,
   getEventLikesByEventID,
 } from "../lib/clients/evento";
-import { getUserEventLikeItem } from "../utils/event";
+import { getUserEventItem } from "../utils/event";
 import { EventoLike, User } from "../constants/types";
 
 // TODO: Fix types
@@ -21,7 +21,7 @@ export const useOptimisticEventLikes = (eventID: string, user: User) => {
   );
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const userEventLikeItem = getUserEventLikeItem(eventLikes, user.$id);
+  const userEventLikeItem = getUserEventItem(eventLikes, user?.$id);
 
   useEffect(() => {
     if (initialEventLikes) {

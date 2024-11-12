@@ -25,6 +25,12 @@ export type EventoLike = {
   userID: string;
 };
 
+export type EventoSubscriber = {
+  $id: string;
+  eventoID: string;
+  userID: string;
+};
+
 export type User = {
   $id: string;
   email: string;
