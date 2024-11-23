@@ -26,7 +26,7 @@ const CustomButton = ({
       onPressOut={animateOut}
       activeOpacity={1}
       className={clsx(
-        "bg-secondary rounded-full h-min w-max flex pt-3.5 pb-3.5 justify-center items-center",
+        "bg-primary-100 border-[1px] border-secondary-100 rounded-full h-14 w-max flex justify-center items-center",
         containerStyles,
         isLoading && "opacity-50"
       )}
@@ -35,7 +35,7 @@ const CustomButton = ({
     >
       <Text
         className={clsx(
-          "text-white font-plight text-2xl",
+          "text-secondary-100 font-plight text-xl",
           textStyles,
           isLoading && "hidden"
         )}

@@ -7,9 +7,9 @@ const useButtonAnimation = () => {
 
   const [shadowStyle, setShadowStyle] = useState({
     shadowColor: DEFAULT_SHADOW_HEX,
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.7,
-    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   });
 
   const animateIn = useCallback(() => {
@@ -22,7 +22,7 @@ const useButtonAnimation = () => {
       shadowColor: ACTIVE_SHADOW_HEX,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 1,
-      shadowRadius: 10,
+      shadowRadius: 2,
     });
   }, [scaleValue]);
 
@@ -34,9 +34,9 @@ const useButtonAnimation = () => {
 
     setShadowStyle({
       shadowColor: DEFAULT_SHADOW_HEX,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 4,
+      shadowOffset: { width: 0, height: 5 },
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
     });
   }, []);
 
