@@ -68,18 +68,24 @@ const SignIn = () => {
             otherStyles="mt-7"
             type="password"
           />
+          <Text className="text-start w-full text-[14px] text-gray-500 mt-2 ml-4">
+            Forgot your password?{" "}
+            <Link className="text-secondary-100" href={"/"}>
+              Just reset it here
+            </Link>
+          </Text>
 
           <CustomButton
-            title="Sign In"
+            title="login"
             handlePress={submit}
             containerStyles="mt-12 w-full"
             isLoading={isSubmitting}
           />
         </View>
         <Text className="text-gray-500 text-[14px] mt-6">
-            Dont have an account?{" "}
+        is this your first time?{" "}
           <Link className="text-secondary-100" href={"/sign-up"}>
-            Signup
+            Come here and join us
           </Link>
         </Text>
       </View>
