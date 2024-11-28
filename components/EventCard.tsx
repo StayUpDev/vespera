@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Image, Text, Pressable } from "react-native";
+import { View, Image, Text, Pressable } from "react-native";
 
 import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
@@ -10,6 +10,7 @@ import useAppwrite from "../lib/useAppwrite";
 import { useRouter } from "expo-router";
 import { useGlobalContext } from "../context/GlobalProvider";
 import SubscriberButton from "./SubscribeButton";
+import UserBadge from "./UserBadge";
 interface EventCardProps {
   event: Evento;
 }
@@ -22,41 +23,83 @@ const EventCard = ({
 
   return (
     <Pressable
-      onPress={() => {
-        if (user && user.role == "promoter") {
-          router.push(`promoter/${eventID}`);
-        } else {
-          router.push(`participant/${eventID}`);
-        }
-      }}
+      // onPress={() => {
+      //   if (user && user.role == "promoter") {
+      //     router.push(`promoter/${eventID}`);
+      //   } else {
+      //     router.push(`participant/${eventID}`);
+      //   }
+      // }}
       style={{
         shadowColor: "#171717",
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
       }}
-      className="flex flex-1 flex-col p-2 justify-between bg-[#121212] h-min mb-6 "
+      className="flex flex-1 flex-col py-2 justify-between bg-[#121212] h-min mb-6 "
     >
-      <View className="px-2 pt-1 title h-fit flex flex-col">
-        <Text className="text-[#fff] text-3xl font-pmedium ">{label}</Text>
-        {/* user display component... */}
-        <View className="flex flex-row gap-2 items-center">
-          <Image
-            source={{ uri: data?.avatar }}
-            className="w-[40px] h-[40px] rounded-full"
-            resizeMode="cover"
-          />
-
-          <Text className="text-[#fff]  font-pmedium ">{data?.username}</Text>
+      <View className="title  flex flex-col">
+        <View className="flex flex-row justify-between px-1">
+          <View className="flex flex-row items-center">
+            <UserBadge
+              avatarURL="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
+              size="lg"
+            />
+            <View className="flex flex-col justify-between px-1">
+              <Text className="text-[#fff] text-base font-pmedium ">
+                {label}
+              </Text>
+              <Text className="text-gray-400 text-[10px] pl-0.5">
+                Price: € 15 - € 20
+              </Text>
+            </View>
+          </View>
+          <View className="flex flex-row items-center">
+            <UserBadge
+              size={"md"}
+              containerStyles="-ml-2"
+              avatarURL={
+                "https://cdn.pixabay.com/photo/2022/01/11/21/48/link-6931554_640.png"
+              }
+            />
+            <UserBadge
+              size={"md"}
+              containerStyles="-ml-2"
+              avatarURL={
+                "https://cdn.pixabay.com/photo/2022/01/11/21/48/link-6931554_640.png"
+              }
+            />
+            <UserBadge
+              size={"md"}
+              containerStyles="-ml-2"
+              avatarURL={
+                "https://cdn.pixabay.com/photo/2022/01/11/21/48/link-6931554_640.png"
+              }
+            />
+            <UserBadge
+              size={"md"}
+              containerStyles="-ml-2"
+              avatarURL={
+                "https://cdn.pixabay.com/photo/2022/01/11/21/48/link-6931554_640.png"
+              }
+            />
+          </View>
         </View>
+
+        {/*<View className="flex flex-row gap-2 items-center">
+          
+
+          <Text className="text-[#fff]  font-pmedium ">
+            {/* data?.username * /}Username
+          </Text>
+        </View>*/}
       </View>
-      <View className="image mt-2 h-max relative rounded-3xl bg-red-400">
+      <View className="image mt-2 h-max relative bg-red-400">
         <Image
           source={{ uri: thumbnail }}
-          className="w-full  h-[200px] rounded-3xl"
+          className="w-full  h-[200px] "
           resizeMode="cover"
         />
-        
       </View>
       <View className="interactions flex flex-row justify-between items-center h-min mt-3">
         <View className="flex flex-row">
@@ -71,20 +114,16 @@ const EventCard = ({
           </View>
         </View>
         <View className="flex flex-row items-center gap-1">
-          <Text className="text-white opacity-60 text-[10px]">
-            Price: € 15 - € 20             
-          </Text>
-          <View className="button mr-2" >
+          <View className="button mr-2">
             {user && user.role == "participant" && (
               <SubscriberButton eventID={eventID} />
             )}
           </View>
         </View>
-        
       </View>
       <View className="description pl-3 mt-3 h-min">
         {description ? (
-          <Text className="text-[#fff] text-sm font-pregular">
+          <Text className="text-[#fff] text-xs font-pregular">
             {description}
           </Text>
         ) : (
@@ -97,69 +136,14 @@ const EventCard = ({
           </Text>
         )}
       </View>
-      <View className="extrainfo flex flex-row px-2 mt-3 justify-between mb-2">
-        <View className="flex flex-row gap-1 items-center max-w-[75%]">
-          {category && <CustomLabel label={category} />}
-          {/* fake data */}
-          <CustomLabel label="aperitivo" />
-        </View>
-        <View className="flex flex-row">
-          <View>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 0 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}
-              className="border border-secondary bg-[#121212] rounded-full w-min p-1 -ml-2"
-            >
-              <Feather name="user" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 0 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}
-              onPress={() => {}}
-              className="border border-secondary bg-[#121212] rounded-full w-min p-1 -ml-2"
-            >
-              <Feather name="user" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 0 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}
-              onPress={() => {}}
-              className="border border-secondary bg-[#121212] rounded-full w-min p-1 -ml-2"
-            >
-              <Feather name="user" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 0 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}
-              onPress={() => {}}
-              className="border border-secondary bg-[#121212] rounded-full w-min p-1 -ml-2"
-            >
-              <Feather name="user" size={20} color="#7F6AF3" />
-            </TouchableOpacity>
-          </View>
+      <View className="extrainfo flex flex-row px-2 mt-3 justify-between">
+        <View className="flex flex-row flex-wrap items-center ">
+          {category && <CustomLabel category="main" label={category} />}
+          <CustomLabel category="tag" label="aperitivo" />
+          <CustomLabel category="tag" label="musica" />
+          <CustomLabel category="tag" label="ciola" />
+          <CustomLabel category="tag" label="molla" />
+          <CustomLabel category="tag" label="frolla" />
         </View>
       </View>
     </Pressable>

@@ -23,7 +23,7 @@ export default function SubscriberButton({ eventID }: LikeHeartProps) {
   return (
     <CustomButton
       title={isNotEventSubscribed ? "opt out" : "participate"}
-      containerStyles={"py-2 w-24 border-[1px]"}
+      containerStyles={"h-[36px] w-24 border-[1px]"}
       handlePress={() => handleUserSubscriber()}
       isLoading={false}
       textStyles={"text-xs"}

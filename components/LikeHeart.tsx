@@ -32,9 +32,9 @@ export default function LikeHeart({ eventID }: LikeHeartProps) {
             color="red"
             onPress={handleUserLike}
           />
-            <Text className="text-gray-500 text-xs font-pregular ">
-              {totalLikes}
-            </Text>
+          <Text className="text-gray-500 text-xs font-pregular min-w-[8px]">
+            {totalLikes}
+          </Text>
         </View>
       </Fragment>
     );
@@ -43,17 +43,17 @@ export default function LikeHeart({ eventID }: LikeHeartProps) {
   return (
     <Fragment>
       <View className="flex flex-row items-center gap-1">
-      <Feather
-        name="heart"
-        size={22}
-        color="#595959"
-        disabled={isUpdating}
-        onPress={handleUserLike}
-      />
-        <Text className="text-gray-500 text-xs font-pregular">
+        <Feather
+          name="heart"
+          size={22}
+          color="#595959"
+          disabled={isUpdating}
+          onPress={handleUserLike}
+        />
+        <Text className="text-gray-500 text-xs font-pregular min-w-[8px]">
           {totalLikes}
         </Text>
-      </View> 
+      </View>
     </Fragment>
   );
 }
