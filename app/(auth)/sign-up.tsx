@@ -1,22 +1,54 @@
 import { useState } from "react";
-import { Link, router } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { createUser } from "../../lib/clients/user";
 import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import { createUser, generateUserToken } from "../../clients/user/user";
+import { queryClient } from "../_layout";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const { setUser, setIsLogged } = useGlobalContext();
 
-  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
+  });
+
+  const { mutate, isPending, isError } = useMutation({
+    mutationFn: async () => {
+      const response = await createUser(form);
+
+      const user = response.data;
+
+      const tokenResponse = await generateUserToken({
+        email: form.email,
+        password: form.password,
+      });
+
+      await AsyncStorage.setItem("token", tokenResponse.token);
+
+      setIsLogged(true);
+      setUser(user);
+
+      router.replace("(tabs)/home");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+
+    onError: () => {
+      setIsLogged(false);
+      setUser(form);
+    },
   });
 
   const submit = async () => {
@@ -24,20 +56,12 @@ const SignUp = () => {
       Alert.alert("Error", "Please fill in all fields");
     }
 
-    setSubmitting(true);
-    try {
-      const result = await createUser(form.email, form.password, form.username);
-      setUser(result);
-      setIsLogged(true);
-
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setSubmitting(false);
-    }
+    mutate();
   };
 
+  if (isError) {
+    <Text>There was an error signing you up boss</Text>;
+  }
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
@@ -83,7 +107,7 @@ const SignUp = () => {
             title="Sign Up"
             handlePress={submit}
             containerStyles="mt-7"
-            isLoading={isSubmitting}
+            isLoading={isPending}
           />
 
           <View className="flex justify-center pt-5 flex-row gap-2">

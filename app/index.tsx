@@ -1,49 +1,70 @@
 import { StatusBar } from "expo-status-bar";
-import { Link, Redirect, router } from "expo-router";
+import { Link, router } from "expo-router";
 import { View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CustomButton, FormField, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
-import { useState } from "react";
-import { getCurrentUser, signIn } from "../lib/clients/user";
+import { useEffect, useState } from "react";
 import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "./_layout";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { generateUserToken } from "../clients/user/user";
 
 const Welcome = () => {
   const { setUser, setIsLogged } = useGlobalContext();
-  const [isSubmitting, setSubmitting] = useState(false);
-  const { loading, isLogged } = useGlobalContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
+  const { mutate, isError, isPending } = useMutation({
+    mutationFn: async () => {
+      setIsLogged(true);
+      const response = await generateUserToken(form);
+      setUser(response.data);
+
+      const token = response.token;
+      await AsyncStorage.setItem("token", token);
+
+      router.replace("/home");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: () => {
+      setIsLogged(true);
+      setUser(form);
+    },
+  });
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+
+      if (token) {
+        router.replace("(tabs)/home");
+      }
+    };
+
+    checkToken();
+  }, []);
+
   const submit = async () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
-
-    setSubmitting(true);
-
-    try {
-      await signIn(form.email, form.password);
-      const result = await getCurrentUser();
-      setUser(result);
-      setIsLogged(true);
-
-      Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setSubmitting(false);
-    }
+    mutate();
   };
-  if (!loading && isLogged) return <Redirect href="/home" />;
+
+  if (isError) {
+    <Text>There was an error logging you in boss</Text>;
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      <Loader isLoading={loading} />
+      <Loader isLoading={isPending} />
 
       <View className="pt-28 pb-6 px-6 flex justify-between align-center h-full w-full">
         <View className="flex flex-col gap-3">
@@ -85,7 +106,7 @@ const Welcome = () => {
             title="login"
             handlePress={submit}
             containerStyles="mt-12 w-full"
-            isLoading={isSubmitting}
+            isLoading={isPending}
             textStyles={undefined}
           />
         </View>

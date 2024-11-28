@@ -6,12 +6,31 @@ import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 import { images } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { getCurrentUser, signIn } from "../../lib/clients/user";
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { generateUserToken } from "../../clients/user/user";
+import { useMutation } from "@tanstack/react-query";
 
 const SignIn = () => {
+  const { mutate, isError, isPending } = useMutation({
+    mutationFn: async () => {
+      setUser(form);
+      setIsLogged(true);
+      const response = await generateUserToken(form);
+      const token = response.token;
+
+      await AsyncStorage.setItem("token", token);
+
+      router.replace("(auth)/home");
+    },
+
+    onError: () => {
+      setIsLogged(true);
+      setUser(form);
+    },
+  });
+
   const { setUser, setIsLogged } = useGlobalContext();
-  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -21,22 +40,12 @@ const SignIn = () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
-
-    setSubmitting(true);
-
-    try {
-      await signIn(form.email, form.password);
-      const result = await getCurrentUser();
-      setUser(result);
-      setIsLogged(true);
-
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setSubmitting(false);
-    }
+    mutate();
   };
+
+  if (isError) {
+    <Text>There was an error logging you in boss</Text>;
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -76,7 +85,7 @@ const SignIn = () => {
             title="Sign In"
             handlePress={submit}
             containerStyles="mt-7"
-            isLoading={isSubmitting}
+            isLoading={isPending}
           />
 
           <View className="flex justify-center pt-5 flex-row gap-2">
