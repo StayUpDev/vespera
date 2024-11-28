@@ -8,7 +8,6 @@ import { useGlobalContext } from "../context/GlobalProvider";
 import { useEffect, useState } from "react";
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "./_layout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { generateUserToken } from "../clients/user/user";
 
@@ -30,12 +29,10 @@ const Welcome = () => {
 
       router.replace("/home");
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
+
     onError: () => {
       setIsLogged(true);
-      setUser(form);
+      setUser(null);
     },
   });
 

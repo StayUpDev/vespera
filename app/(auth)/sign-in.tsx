@@ -14,9 +14,10 @@ import { useMutation } from "@tanstack/react-query";
 const SignIn = () => {
   const { mutate, isError, isPending } = useMutation({
     mutationFn: async () => {
-      setUser(form);
-      setIsLogged(true);
       const response = await generateUserToken(form);
+
+      setIsLogged(true);
+      setUser(response.data);
       const token = response.token;
 
       await AsyncStorage.setItem("token", token);
@@ -26,7 +27,7 @@ const SignIn = () => {
 
     onError: () => {
       setIsLogged(true);
-      setUser(form);
+      setUser(null);
     },
   });
 

@@ -47,7 +47,7 @@ const SignUp = () => {
 
     onError: () => {
       setIsLogged(false);
-      setUser(form);
+      setUser(null);
     },
   });
 

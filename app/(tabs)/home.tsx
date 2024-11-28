@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   FlatList,
@@ -12,23 +12,36 @@ import { EmptyState } from "../../components";
 import EventCard from "../../components/EventCard";
 
 import Feather from "@expo/vector-icons/Feather";
-import { getAllEvents } from "../../lib/clients/evento";
-import useAppwrite from "../../lib/useAppwrite";
+import { useQuery } from "@tanstack/react-query";
+import { getEventoByUserID } from "../../clients/user/event";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
-  const { data: events, refetch } = useAppwrite(getAllEvents);
+  const { user } = useGlobalContext();
 
-  const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
-  };
-
+  const {
+    data: events,
+    isError,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useQuery({
+    queryKey: ["user_events"],
+    queryFn: async () => {
+      return await getEventoByUserID(user.id);
+    },
+  });
   // one flatlist
   // with list header
   // and horizontal flatlist
+
+  if (isError) {
+    return <Text>There was an error fetching events</Text>;
+  }
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <SafeAreaView className="bg-white px-2 ">
@@ -65,7 +78,7 @@ const Home = () => {
           />
         )}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
         }
       />
     </SafeAreaView>

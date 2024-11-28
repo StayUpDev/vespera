@@ -1,13 +1,11 @@
 // context.tsx or similar file
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
-import { User } from "../constants/types";
-import { getCurrentUser } from "../lib/clients/user";
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { User } from "../types/user";
+import { useQuery } from "@tanstack/react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from "jsonwebtoken";
+import { JWTClaims } from "../types/api";
+import { getUserByID } from "../clients/user/user";
 
 interface GlobalContextType {
   isLogged: boolean;
@@ -30,32 +28,27 @@ export const useGlobalContext = (): GlobalContextType => {
 const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const res: User | null = await getCurrentUser();
-        if (res) {
-          setIsLogged(true);
-          setUser(res);
-        } else {
-          setIsLogged(false);
-          setUser(null);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+  const { isLoading } = useQuery({
+    queryFn: async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        const decoded: JWTClaims = jwt_decode.verify(
+          token,
+          process.env.EXPO_PUBLIC_JWT_SECRET
+        );
+        console.log("Decoded token: ", decoded);
+
+        const response = await getUserByID(decoded.userID);
+        setUser(response);
       }
-    };
-
-    fetchCurrentUser();
-  }, []);
+    },
+    queryKey: ["userID"],
+  });
 
   return (
     <GlobalContext.Provider
-      value={{ isLogged, setIsLogged, user, setUser, loading }}
+      value={{ isLogged, setIsLogged, user, setUser, loading: isLoading }}
     >
       {children}
     </GlobalContext.Provider>
