@@ -6,27 +6,40 @@ import { icons } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { EmptyState, InfoBox } from "../../components";
 import EventCard from "../../components/EventCard";
-import { signOut } from "../../lib/clients/user";
-import { getUserEvents } from "../../lib/clients/evento";
-import useAppwrite from "../../lib/useAppwrite";
+
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useQuery } from "@tanstack/react-query";
+import { getEventoByUserID } from "../../clients/user/event";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: events } = useAppwrite(() => getUserEvents(user.$id));
 
+
+  const {data} = useQuery({
+    queryKey: ["user_events"],
+    queryFn: async () => {
+      return getEventoByUserID(user.id)
+    }
+   })
+ 
   const logout = async () => {
-    await signOut();
-    setUser(null);
-    setIsLogged(false);
+    const token = await AsyncStorage.getItem("token")
+    if (token) {
+      await AsyncStorage.removeItem("token")
+      await AsyncStorage.removeItem("user_id")
+      setUser(null);
+      setIsLogged(false);
 
+
+    }
     router.replace("/sign-in");
   };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={events}
+        data={data.data}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }: { item }) => <EventCard event={item} />}
         ListEmptyComponent={() => (
@@ -47,7 +60,7 @@ const Profile = () => {
 
             <View className="w-16 h-16 border border-secondary rounded-lg flex justify-center items-center">
               <Image
-                source={{ uri: user?.avatar }}
+                source={{ uri: user?.avatarURL}}
                 className="w-[90%] h-[90%] rounded-lg"
                 resizeMode="cover"
               />
@@ -61,9 +74,9 @@ const Profile = () => {
             />
 
             <View className="mt-5 flex flex-row">
-              {events && (
+              {data.data && (
                 <InfoBox
-                  title={events.length || 0}
+                  title={data.data.length || 0}
                   subtitle="Events"
                   titleStyles="text-xl"
                   containerStyles="mr-10"

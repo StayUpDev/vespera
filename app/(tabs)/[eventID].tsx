@@ -2,33 +2,32 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
-import { getEventByID } from "../../lib/clients/evento";
 import {
   GestureHandlerRootView,
   RefreshControl,
   ScrollView,
 } from "react-native-gesture-handler";
-import useAppwrite from "../../lib/useAppwrite";
 import { CustomButton } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { useOptimisticEventLikes } from "../../hooks/useEventLikes";
 
 export default function ModalView() {
   const { eventID }: { eventID: string } = useLocalSearchParams();
-  const {
-    data: event,
-    refetch,
-    loading: loadingEvent,
-  } = useAppwrite(() => getEventByID(eventID));
 
   const { user } = useGlobalContext();
-  const { eventLikes, loadingEventLikes, handleUserLike, refetchEventLikes } =
-    useOptimisticEventLikes(eventID, user);
 
-  const handleRefresh = async () => {
-    await refetch();
-    await refetchEventLikes();
-  };
+  const {
+    data: events,
+    isError,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useQuery({
+    queryKey: ["user_events"],
+    queryFn: async () => {
+      return await getEventoByUserID(user.id);
+    },
+  });
+  
 
   if (loadingEvent) {
     // TODO: Loading event data component

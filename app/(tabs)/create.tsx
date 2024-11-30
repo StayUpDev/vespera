@@ -12,14 +12,14 @@ import {
 
 import { icons } from "../../constants";
 import { CustomButton, FormField } from "../../components";
-import { useGlobalContext } from "../../context/GlobalProvider";
-import { type CreateEvento } from "../../constants/types";
-import { createEvent } from "../../lib/clients/evento";
+import { queryClient, useGlobalContext } from "../../context/GlobalProvider";
 import { Picker } from "@react-native-picker/picker";
 import CustomModal from "../../components/Modal";
 import { getEmptyEventState } from "../../utils/event";
 import { openPicker } from "../../utils/event/create";
 import React from "react";
+import { EventoCreate } from "../../types/event";
+import { useMutation } from "@tanstack/react-query";
 
 // TODO: per ora le categorie sono hardcoded
 const categories = [
@@ -37,41 +37,27 @@ const categories = [
 
 const Create = () => {
   const { user } = useGlobalContext();
-  const [uploading, setUploading] = useState(false);
   const [isChoosingCategory, setIsChoosingCategory] = useState(false);
-  const [event, setEvent] = useState<CreateEvento>(getEmptyEventState());
+  const [event, setEvent] = useState<EventoCreate>(getEmptyEventState(user.id));
+
+
+  const {mutate: createEvent, isPending} = useMutation({
+    mutationFn: async () => {
+         
+      
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["event_user", "event"] });
+    }
+  })
+
 
   const submit = async () => {
     if (event.label === "" || !event.thumbnail) {
       return Alert.alert("Please provide all fields");
     }
-
-    setUploading(true);
-    try {
-      await createEvent({
-        ...event,
-      });
-
-      Alert.alert("Success", "Post uploaded successfully");
-      router.push("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setEvent({
-        description: "",
-        category: "",
-        costo: null,
-        dateFrom: new Date(),
-        dateTo: new Date(),
-        label: "",
-        parcheggio: false,
-        tags: [],
-        thumbnail: null,
-        userID: user.$id,
-      });
-
-      setUploading(false);
-    }
+    
+    createEvent()
   };
 
   return (
@@ -135,7 +121,7 @@ const Create = () => {
           <TouchableOpacity onPress={() => openPicker(event, setEvent)}>
             {event.thumbnail ? (
               <Image
-                source={{ uri: event.thumbnail.uri }}
+                source={{ uri: event.thumbnail }}
                 resizeMode="cover"
                 className="w-full h-64 rounded-2xl"
               />
@@ -160,7 +146,7 @@ const Create = () => {
           title="Submit & Publish"
           handlePress={submit}
           containerStyles="mt-7"
-          isLoading={uploading}
+          isLoading={isPending}
         />
       </ScrollView>
     </SafeAreaView>

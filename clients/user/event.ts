@@ -4,9 +4,9 @@ import {
   GetUserTokenResponse,
   User,
 } from "../../types/user";
-import { GetEventsByUserIDResponse } from "../../types/event";
+import { EventoCreate, GetEventByEventIDResponse, GetEventsByUserIDResponse } from "../../types/event";
 
-export async function getEventoByUserID(userID: number): Promise<GetEventsByUserIDResponse>{
+export async function getEventoByUserID(userID: number): Promise<GetEventsByUserIDResponse> {
   try {
     const response = await axios.get(
       `${process.env.EXPO_PUBLIC_API_URL}/events/user&userID=${userID}`
@@ -43,5 +43,29 @@ export async function getUserByID(userID: string): Promise<User> {
   } catch (error) {
     console.error("error user: ", error);
     throw new Error("error registering user: ", error);
+  }
+}
+
+export async function getEventByID(eventoID: number): Promise<GetEventByEventIDResponse> {
+  try {
+    const response = await axios.get(
+      `${process.env.EXPO_PUBLIC_API_URL}/events&eventID=${eventoID}`
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error("error fetching events: ", error);
+  }
+}
+
+export async function createEvento(evento: EventoCreate): Promise<GetEventByEventIDResponse> {
+  try {
+    const response = await axios.post(
+      `${process.env.EXPO_PUBLIC_API_URL}/events/create`
+      , evento);
+
+    return response.data;
+  } catch (error) {
+    throw new Error("error create evento: ", error);
   }
 }

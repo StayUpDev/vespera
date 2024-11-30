@@ -3,21 +3,28 @@ import { View, TouchableOpacity, Image, Text, Pressable } from "react-native";
 
 import LikeHeart from "./LikeHeart";
 import Feather from "@expo/vector-icons/Feather";
-import { Evento } from "../constants/types";
 import CustomLabel from "./CustomLabel";
-import { getUserByID } from "../lib/clients/user";
-import useAppwrite from "../lib/useAppwrite";
 import { useRouter } from "expo-router";
 import { useGlobalContext } from "../context/GlobalProvider";
 import SubscriberButton from "./SubscribeButton";
+import {Event} from "../types/event"
+import { useQuery } from "@tanstack/react-query";
+import { getUserByID } from "../clients/user/user";
+ 
 interface EventCardProps {
-  event: Evento;
+  event: Event;
 }
 const EventCard = ({
-  event: { category, label, thumbnail, userID, description, $id: eventID },
+  event: { category, label, thumbnail, userID, description, id: eventID },
 }: EventCardProps) => {
   const router = useRouter();
-  const { data } = useAppwrite(() => getUserByID(userID));
+
+  const {data} = useQuery({
+    queryKey: ["user_id"],
+    queryFn: async () => {
+        return await getUserByID(userID) 
+    }
+  })
   const { user } = useGlobalContext();
 
   return (
@@ -42,7 +49,7 @@ const EventCard = ({
         {/* user display component... */}
         <View className="flex flex-row gap-2 items-center">
           <Image
-            source={{ uri: data?.avatar }}
+            source={{ uri: data?.avatarURL}}
             className="w-[40px] h-[40px] rounded-full"
             resizeMode="cover"
           />

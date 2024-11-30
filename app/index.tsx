@@ -26,6 +26,7 @@ const Welcome = () => {
 
       const token = response.token;
       await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user_id", JSON.stringify(response.data.id));
 
       router.replace("/home");
     },

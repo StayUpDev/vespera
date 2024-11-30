@@ -1,14 +1,8 @@
-import { CreateEvento, UserEventoLike } from "../constants/types";
+import { EventoCreate } from "../types/event";
 
-export function getUserEventItem(
-  userEventLikes: UserEventoLike[],
-  userID: string
-) {
-  return userEventLikes.find((item) => item.userID === userID);
-}
-
-export function getEmptyEventState(): CreateEvento {
+export function getEmptyEventState(userID: number): EventoCreate {
   return {
+    dressCode: "",
     description: "",
     category: "",
     costo: null,
@@ -18,6 +12,6 @@ export function getEmptyEventState(): CreateEvento {
     parcheggio: false,
     tags: [],
     thumbnail: null,
-    userID: "",
+    userID: userID,
   };
 }

@@ -36,3 +36,25 @@ export type GetEventoByUserIDRequest = {
   userID: string
 }
 export type GetEventsByUserIDResponse = APIResponse<Event[]>
+
+export type GetEventoByEventoIDRequest = {
+  userID: string
+}
+
+export type GetEventByEventIDResponse = APIResponse<Event>
+
+
+export type EventoCreate = {
+  label: string;
+  description: string;
+  dateFrom: Date;
+  dateTo: Date;
+  category: string;
+  costo: number;
+  userID: number;
+  parcheggio: boolean;
+  dressCode: string;
+  tags: string[];
+  thumbnail: string;
+
+}

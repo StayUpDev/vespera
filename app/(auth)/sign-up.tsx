@@ -5,11 +5,10 @@ import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
 import { CustomButton, FormField } from "../../components";
-import { useGlobalContext } from "../../context/GlobalProvider";
+import { queryClient, useGlobalContext } from "../../context/GlobalProvider";
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createUser, generateUserToken } from "../../clients/user/user";
-import { queryClient } from "../_layout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUp = () => {
