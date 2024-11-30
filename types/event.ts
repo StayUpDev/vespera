@@ -31,3 +31,8 @@ export type EventoComment = {
 };
 
 export type EventWithLikesAndComments = Event & EventoLike & EventoComment;
+
+export type GetEventoByUserIDRequest = {
+  userID: string
+}
+export type GetEventsByUserIDResponse = APIResponse<Event[]>

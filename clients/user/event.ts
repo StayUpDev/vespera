@@ -4,8 +4,9 @@ import {
   GetUserTokenResponse,
   User,
 } from "../../types/user";
+import { GetEventsByUserIDResponse } from "../../types/event";
 
-export async function getEventoByUserID(userID: number) {
+export async function getEventoByUserID(userID: number): Promise<GetEventsByUserIDResponse>{
   try {
     const response = await axios.get(
       `${process.env.EXPO_PUBLIC_API_URL}/events/user&userID=${userID}`
