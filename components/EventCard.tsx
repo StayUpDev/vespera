@@ -38,23 +38,23 @@ const EventCard = ({
       }}
       className="flex flex-1 flex-col py-2 justify-between bg-[#121212] h-min mb-6 "
     >
-      <View className="title  flex flex-col">
-        <View className="flex flex-row justify-between px-1">
-          <View className="flex flex-row items-center">
+      <View className="title flex flex-col">
+        <View className="flex flex-row justify-between items-end px-1">
+          <View className="flex flex-row items-end">
             <UserBadge
               avatarURL="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
               size="lg"
             />
             <View className="flex flex-col justify-between px-1">
-              <Text className="text-[#fff] text-base font-pmedium ">
+              <Text className="text-[#fff] text-base font-pmedium">
                 {label}
               </Text>
-              <Text className="text-gray-400 text-[10px] pl-0.5">
+              <Text className="text-gray-400 text-[10px]">
                 Price: € 15 - € 20
               </Text>
             </View>
           </View>
-          <View className="flex flex-row items-center">
+          <View className="flex flex-row items-end mr-1">
             <UserBadge
               size={"md"}
               containerStyles="-ml-2"

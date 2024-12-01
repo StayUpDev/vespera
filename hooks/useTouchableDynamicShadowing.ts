@@ -1,10 +1,14 @@
-import { useState, useRef, useCallback } from "react";
-import { Animated } from "react-native";
+import { useState, useCallback } from "react";
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
+
 import { ACTIVE_SHADOW_HEX, DEFAULT_SHADOW_HEX } from "../constants/styling";
 
 const useButtonAnimation = () => {
-  const scaleValue = useRef(new Animated.Value(1)).current;
-
+  const scaleValue = useSharedValue(1);
   const [shadowStyle, setShadowStyle] = useState({
     shadowColor: DEFAULT_SHADOW_HEX,
     shadowOffset: { width: 0, height: 5 },
@@ -12,11 +16,16 @@ const useButtonAnimation = () => {
     shadowRadius: 5,
   });
 
+  const [backgroundColor, setBackgroundColor] = useState({
+    backgroundColor: "transparent",
+  });
+
   const animateIn = useCallback(() => {
-    Animated.spring(scaleValue, {
-      toValue: 0.99,
-      useNativeDriver: true,
-    }).start();
+    scaleValue.value = withSpring(0.99);
+
+    setBackgroundColor({
+      backgroundColor: "#ffffff50",
+    });
 
     setShadowStyle({
       shadowColor: ACTIVE_SHADOW_HEX,
@@ -27,10 +36,11 @@ const useButtonAnimation = () => {
   }, [scaleValue]);
 
   const animateOut = useCallback(() => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
+    scaleValue.value = withSpring(1);
+
+    setBackgroundColor({
+      backgroundColor: "transparent",
+    });
 
     setShadowStyle({
       shadowColor: DEFAULT_SHADOW_HEX,
@@ -40,7 +50,19 @@ const useButtonAnimation = () => {
     });
   }, []);
 
-  return { scaleValue, shadowStyle, animateIn, animateOut };
+  const animatedScaleStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scaleValue.value }],
+    };
+  });
+
+  return {
+    animatedScaleStyle,
+    shadowStyle,
+    animateIn,
+    animateOut,
+    backgroundColor,
+  };
 };
 
 export default useButtonAnimation;
