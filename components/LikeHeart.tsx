@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Text } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useOptimisticEventLikes } from "../hooks/useEventLikes";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { getUserEventItem } from "../utils/event";
@@ -25,14 +25,14 @@ export default function LikeHeart({ eventID }: LikeHeartProps) {
     return (
       <Fragment>
         <View className="flex flex-row items-center gap-1">
-          <Feather
+          <AntDesign
             name="heart"
             disabled={isUpdating}
             size={22}
             color="red"
             onPress={handleUserLike}
           />
-          <Text className="text-gray-500 text-xs font-pregular min-w-[8px]">
+          <Text className="text-white text-xs font-pregular min-w-[8px]">
             {totalLikes}
           </Text>
         </View>
@@ -43,14 +43,14 @@ export default function LikeHeart({ eventID }: LikeHeartProps) {
   return (
     <Fragment>
       <View className="flex flex-row items-center gap-1">
-        <Feather
-          name="heart"
+        <AntDesign
+          name="hearto"
           size={22}
-          color="#595959"
+          color="#fff"
           disabled={isUpdating}
           onPress={handleUserLike}
         />
-        <Text className="text-gray-500 text-xs font-pregular min-w-[8px]">
+        <Text className="text-white text-xs font-pregular min-w-[8px]">
           {totalLikes}
         </Text>
       </View>

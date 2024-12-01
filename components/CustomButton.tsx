@@ -1,8 +1,6 @@
 import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import { clsx } from "clsx";
-import useButtonAnimation from "../hooks/useTouchableDynamicShadowing";
-import { View } from "react-native-animatable";
 import Animated, {
   ReduceMotion,
   useSharedValue,

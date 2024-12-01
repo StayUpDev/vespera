@@ -2,6 +2,7 @@ import React from "react";
 import { View, Image, Text, Pressable } from "react-native";
 
 import LikeHeart from "./LikeHeart";
+import ShareEvent from "./ShareEvent";
 import Feather from "@expo/vector-icons/Feather";
 import { Evento } from "../constants/types";
 import CustomLabel from "./CustomLabel";
@@ -110,7 +111,7 @@ const EventCard = ({
             <Feather name="message-circle" size={22} color="#fff" />
           </View>
           <View className="ml-3">
-            <Feather name="send" size={22} color="#fff" />
+            <ShareEvent />
           </View>
         </View>
         <View className="flex flex-row items-center gap-1">
