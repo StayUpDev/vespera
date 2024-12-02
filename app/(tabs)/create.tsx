@@ -12,7 +12,7 @@ import {
 
 import { icons } from "../../constants";
 import { CustomButton, FormField } from "../../components";
-import { queryClient, useGlobalContext } from "../../context/GlobalProvider";
+import {  useGlobalContext } from "../../context/GlobalProvider";
 import { Picker } from "@react-native-picker/picker";
 import CustomModal from "../../components/Modal";
 import { getEmptyEventState } from "../../utils/event";
@@ -20,6 +20,7 @@ import { openPicker } from "../../utils/event/create";
 import React from "react";
 import { EventoCreate } from "../../types/event";
 import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../_layout";
 
 // TODO: per ora le categorie sono hardcoded
 const categories = [
@@ -38,7 +39,7 @@ const categories = [
 const Create = () => {
   const { user } = useGlobalContext();
   const [isChoosingCategory, setIsChoosingCategory] = useState(false);
-  const [event, setEvent] = useState<EventoCreate>(getEmptyEventState(user.id));
+  const [event, setEvent] = useState<EventoCreate>(getEmptyEventState(user.ID));
 
 
   const {mutate: createEvent, isPending} = useMutation({

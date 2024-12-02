@@ -13,11 +13,13 @@ import EventCard from "../../components/EventCard";
 
 import Feather from "@expo/vector-icons/Feather";
 import { useQuery } from "@tanstack/react-query";
-import { getEventoByUserID } from "../../clients/user/event";
+import { getEventoByUserID, getEvents } from "../../clients/user/event";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
   const { user } = useGlobalContext();
+
+  console.log("home: ", user)
 
   const {
     data: events,
@@ -26,16 +28,16 @@ const Home = () => {
     refetch,
     isRefetching,
   } = useQuery({
-    queryKey: ["user_events"],
+    queryKey: ["events"],
     queryFn: async () => {
-      return await getEventoByUserID(user.id);
+      return await getEvents();
     },
   });
   // one flatlist
   // with list header
   // and horizontal flatlist
-
   if (isError) {
+
     return <Text>There was an error fetching events</Text>;
   }
 

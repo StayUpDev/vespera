@@ -1,7 +1,7 @@
 import { APIResponse } from "./api";
 
 export type User = {
-  id: number;
+  ID: number;
   username: string;
   email: string;
   avatarURL: string;

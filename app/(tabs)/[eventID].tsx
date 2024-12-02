@@ -9,6 +9,8 @@ import {
 } from "react-native-gesture-handler";
 import { CustomButton } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import { useQuery } from "@tanstack/react-query";
+import { getEventByID, getEventoByUserID } from "../../clients/user/event";
 
 export default function ModalView() {
   const { eventID }: { eventID: string } = useLocalSearchParams();
@@ -24,44 +26,41 @@ export default function ModalView() {
   } = useQuery({
     queryKey: ["user_events"],
     queryFn: async () => {
-      return await getEventoByUserID(user.id);
+      return await getEventByID(eventID);
     },
   });
   
 
-  if (loadingEvent) {
+  if (isLoading) {
     // TODO: Loading event data component
     return <Text>Loading event data...</Text>;
   }
 
-  if (loadingEventLikes) {
-    // TODO: Loading likes data component
-    return <Text>loading event likes...</Text>;
-  }
-
+  
   return (
+
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView>
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={loadingEvent}
-              onRefresh={handleRefresh}
+              refreshing={isRefetching}
+              onRefresh={refetch}
             />
           }
         >
           <View className="p-2">
-            <Text>{event.label}</Text>
+            <Text>{events.data.label}</Text>
             <View>
               <Image
-                source={{ uri: event.thumbnail }}
+                source={{ uri: events.data.thumbnail}}
                 style={{ width: 200, height: 200 }}
               />
             </View>
-            <Text>{event.description}</Text>
+            <Text>{events.data.description}</Text>
             <CustomButton
-              title={`likes: ${eventLikes.length}`}
-              handlePress={handleUserLike}
+              handlePress={() => {}}
+              title={`likes: ${0}`}
             />
           </View>
         </ScrollView>

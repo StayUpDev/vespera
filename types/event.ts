@@ -45,6 +45,7 @@ export type GetEventByEventIDResponse = APIResponse<Event>
 
 
 export type EventoCreate = {
+
   label: string;
   description: string;
   dateFrom: Date;
@@ -55,6 +56,8 @@ export type EventoCreate = {
   parcheggio: boolean;
   dressCode: string;
   tags: string[];
-  thumbnail: string;
+  thumbnail: File;
 
 }
+
+export type GetEventsResponse = APIResponse<Event[]>

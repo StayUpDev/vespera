@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
@@ -12,38 +12,58 @@ import { generateUserToken } from "../../clients/user/user";
 import { useMutation } from "@tanstack/react-query";
 
 const SignIn = () => {
-  const { mutate, isError, isPending } = useMutation({
-    mutationFn: async () => {
-      const response = await generateUserToken(form);
-
-      setIsLogged(true);
-      setUser(response.data);
-      const token = response.token;
-
-      await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("user_id", JSON.stringify(response.data.id));
-
-      router.replace("(auth)/home");
-    },
-
-    onError: () => {
-      setIsLogged(true);
-      setUser(null);
-    },
-  });
-
   const { setUser, setIsLogged } = useGlobalContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
+  const { user } = useGlobalContext()
+
+
+
+  const { mutate, isError, isPending } = useMutation({
+    mutationFn: async () => {
+      console.log("mutating your mother")
+      const response = await generateUserToken(form);
+      console.log("response withing mutation: ", response)
+      const token = response.token;
+
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user_id", JSON.stringify(response.data.ID));
+
+      console.log("set token to: ", token)
+      console.log("setting user to:", response.data)
+      console.log("set userID to: ", response.data.ID)
+
+
+      setIsLogged(true);
+      setUser(response.data);
+    },
+
+    onError: (error) => {
+      console.log(error)
+      setIsLogged(false);
+      setUser(null);
+    },
+  });
+
+  useEffect(() => {
+
+    if (user) {
+      return router.replace("/(tabs)/home")
+    }
+  }, [user]);
+
   const submit = async () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
+    console.log("submitting")
     mutate();
   };
+
+  
 
   if (isError) {
     <Text>There was an error logging you in boss</Text>;

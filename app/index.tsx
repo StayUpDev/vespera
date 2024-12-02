@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { Link, router } from "expo-router";
 import { View, Text, Alert } from "react-native";
+import { Link, Redirect, useRouter} from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CustomButton, FormField, Loader } from "../components";
@@ -12,47 +12,68 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { generateUserToken } from "../clients/user/user";
 
 const Welcome = () => {
+
+  const router = useRouter()
+
   const { setUser, setIsLogged } = useGlobalContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
+  const {user} = useGlobalContext()
+
   const { mutate, isError, isPending } = useMutation({
     mutationFn: async () => {
-      setIsLogged(true);
+      console.log("mutating your mother")
       const response = await generateUserToken(form);
-      setUser(response.data);
-
+      console.log("response withing mutation: ", response)
       const token = response.token;
-      await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("user_id", JSON.stringify(response.data.id));
 
-      router.replace("/home");
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user_id", JSON.stringify(response.data.ID));
+
+      console.log("set token to: ", token)
+      console.log("set userID to: ", response.data.ID)
+      console.log("setting user to:", response.data)
+
+
+      setIsLogged(true);
+      setUser(response.data);
     },
 
-    onError: () => {
-      setIsLogged(true);
+    onError: (error) => {
+      console.log(error)
+      setIsLogged(false);
       setUser(null);
     },
   });
 
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem("token");
+    
+   if(user) {
+      return router.replace("/(tabs)/home")
+    }
+  }, [user]);
 
-      if (token) {
-        router.replace("(tabs)/home");
-      }
-    };
+  useEffect(() => {
+      const check = async () => {
 
-    checkToken();
-  }, []);
+      const token = await AsyncStorage.getItem("token") 
+      const userID = await AsyncStorage.getItem("user_id") 
+
+      console.log("token: ", token)
+      console.log("userID: ", userID)
+
+    }
+    check()
+  }, [])
 
   const submit = async () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
+    console.log("submitting")
     mutate();
   };
 

@@ -1,9 +1,7 @@
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 // context.tsx or similar file
-import React, { createContext, useContext, useState, ReactNode } from "react";
 import { User } from "../types/user";
 import {
-  QueryClient,
-  QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,7 +17,6 @@ interface GlobalContextType {
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-export const queryClient = new QueryClient();
 
 export const useGlobalContext = (): GlobalContextType => {
   const context = useContext(GlobalContext);
@@ -36,21 +33,25 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { isLoading } = useQuery({
     queryFn: async () => {
       const userID = await AsyncStorage.getItem("user_id");
-      if (userID) {
+      if (userID && user === null) {
+        console.log("getting user by id within global provider")
         const response = await getUserByID(userID);
+        setIsLogged(true)
         setUser(response);
+        return response
       }
+      return null
     },
     queryKey: ["userID"],
   });
 
-  console.log("queryClient", queryClient);
 
-  return (
+    return (
     <GlobalContext.Provider
       value={{ isLogged, setIsLogged, user, setUser, loading: isLoading }}
     >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+
+      {children}
     </GlobalContext.Provider>
   );
 };
