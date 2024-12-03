@@ -62,8 +62,10 @@ const Welcome = () => {
       const token = await AsyncStorage.getItem("token") 
       const userID = await AsyncStorage.getItem("user_id") 
 
-      console.log("token: ", token)
-      console.log("userID: ", userID)
+      if(token && userID) {
+        router.replace("/(tabs)/home")
+      }
+
 
     }
     check()

@@ -40,12 +40,13 @@ export async function generateUserToken(
 }
 
 export async function getUserByID(userID: string): Promise<User> {
-  console.log("Getting user by ID")
+  console.log("Getting user by ID:", userID)
   try {
     const response = await axios.get(
       `${process.env.EXPO_PUBLIC_API_URL}/users?userID=${userID}`
     );
 
+    console.log("Setting user to ", response.data)
     return response.data;
   } catch (error) {
     console.error("error user: ", error);
