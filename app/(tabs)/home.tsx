@@ -46,7 +46,7 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView className="bg-white px-2 ">
+    <SafeAreaView className="bg-[#121212] px-2 ">
       <FlatList
         showsVerticalScrollIndicator={false}
         data={events.data}

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
+import { Alert, Text, View} from "react-native";
 
-import { images } from "../../constants";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import React from "react";
@@ -63,66 +62,54 @@ const SignUp = () => {
     <Text>There was an error signing you up boss</Text>;
   }
   return (
-    <SafeAreaView className="bg-primary h-full">
-      <ScrollView>
-        <View
-          className="w-full flex justify-center h-full px-4 my-6"
-          style={{
-            minHeight: Dimensions.get("window").height - 100,
-          }}
-        >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
-
-          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign Up to Vespera
+    <SafeAreaView className="bg-primary-100 h-full">
+      <View className="pt-28 pb-6 px-6 flex justify-between align-center h-full w-full">
+        <View className="flex flex-col gap-3">
+          <Text className="text-center text-7xl text-gray-400 font-plight">
+            ves<Text className="text-secondary-100">&#8217;</Text>pera
           </Text>
 
-          <FormField
-            title="Username"
-            value={form.username}
-            handleChangeText={(e) => setForm({ ...form, username: e })}
-            otherStyles="mt-10"
-          />
-
-          <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-
-          <FormField
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
-          />
-
-          <CustomButton
-            title="Sign Up"
-            handlePress={submit}
-            containerStyles="mt-7"
-            isLoading={isPending}
-          />
-
-          <View className="flex justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
-              Have an account already?
-            </Text>
-            <Link
-              href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
-            >
-              Login
-            </Link>
-          </View>
+          <Text className="text-center text-xl text-gray-400 font-plight">
+            don&#8217;t waste another night.
+          </Text>
         </View>
-      </ScrollView>
+        <View className="flex flex-col mx-auto items-center w-full justify-center">
+          <FormField
+              title="username"
+              placeholder="username"
+              value={form.username}
+              handleChangeText={(e) => setForm({ ...form, username: e })}
+              otherStyles="mt-7"
+            />
+            <FormField
+              title="Email"
+              placeholder="email"
+              value={form.email}
+              handleChangeText={(e) => setForm({ ...form, email: e })}
+              otherStyles="mt-7"
+              keyboardType="email-address"
+            />
+            <FormField
+              title="Password"
+              placeholder="password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
+              otherStyles="mt-7"
+            />
+            <CustomButton
+              title="sign up"
+              handlePress={submit}
+              containerStyles="mt-12 w-full"
+              isLoading={isPending}
+            />
+        </View>
+        <Text className="text-gray-500 text-[14px] mt-6">
+            Have an account already?{" "}
+          <Link className="text-secondary-100" href={"/sign-in"}>
+            Login
+          </Link>
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };

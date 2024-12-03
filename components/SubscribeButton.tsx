@@ -1,6 +1,5 @@
 import React from "react";
 import { useGlobalContext } from "../context/GlobalProvider";
-import { useOptimisticEventSubscribers } from "../hooks/useEventSubscribers";
 import CustomButton from "./CustomButton";
 
 interface LikeHeartProps {
@@ -14,10 +13,10 @@ export default function SubscriberButton({ eventID }: LikeHeartProps) {
   return (
     <CustomButton
       title={"participate"}
-      containerStyles={"py-2"}
-      handlePress={() => {}}
+      containerStyles={"h-[36px] w-24 border-[1px]"}
+      handlePress={() => () => console.log("liked")}
       isLoading={false}
-      textStyles={"text-lg"}
+      textStyles={"text-xs"}
     />
   );
 }

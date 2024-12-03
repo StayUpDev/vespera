@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { View, Text, Alert } from "react-native";
-import { Link, Redirect, useRouter} from "expo-router";
+import { Link, useRouter} from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { CustomButton, FormField, Loader } from "../components";
@@ -89,11 +89,11 @@ const Welcome = () => {
 
       <View className="pt-28 pb-6 px-6 flex justify-between align-center h-full w-full">
         <View className="flex flex-col gap-3">
-          <Text className="text-center text-7xl text-[#fdfdff] font-plight opacity-80">
-            ves&#8217;pera
+          <Text className="text-center text-7xl text-gray-400 font-plight">
+            ves<Text className="text-secondary-100">&#8217;</Text>pera
           </Text>
 
-          <Text className="text-center text-xl text-[#fdfdff] font-pextralight opacity-60">
+          <Text className="text-center text-xl text-gray-400 font-plight">
             don&#8217;t waste another night.
           </Text>
         </View>
@@ -117,9 +117,9 @@ const Welcome = () => {
             otherStyles={null}
             keyboardType="email-address"
           />
-          <Text className="text-start w-full text-gray-100 ">
+          <Text className="text-start w-full text-[14px] text-gray-500 mt-2 ml-4">
             Forgot your password?{" "}
-            <Link className="text-[#7F6AF3]" href={"/"}>
+            <Link className="text-secondary-100" href={"/"}>
               Just reset it here
             </Link>
           </Text>
@@ -132,9 +132,9 @@ const Welcome = () => {
           />
         </View>
 
-        <Text className="text-gray-100 mt-6">
+        <Text className="text-gray-500 text-[14px] mt-6">
           is this your first time?{" "}
-          <Link className="text-[#7F6AF3]" href={"/(auth)/sign-up"}>
+          <Link className="text-secondary-100" href={"/(auth)/sign-up"}>
             Come here and join us
           </Link>
         </Text>
