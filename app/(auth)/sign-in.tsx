@@ -106,10 +106,10 @@ const SignIn = () => {
           </Text>
 
           <CustomButton
-            title="login"
-            handlePress={submit}
-            containerStyles="mt-7"
-            isLoading={isPending}
+              title="login"
+              handlePress={submit}
+              containerStyles="mt-12 w-full"
+              isLoading={isPending}
           />
         </View>
         <Text className="text-gray-500 text-[14px] mt-6">

@@ -96,8 +96,15 @@ const SignUp = () => {
               handleChangeText={(e) => setForm({ ...form, password: e })}
               otherStyles="mt-7"
             />
+            <FormField
+              title="Confirm Password"
+              placeholder="confirm password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
+              otherStyles="mt-7"
+            />
             <CustomButton
-              title="sign up"
+              title="register"
               handlePress={submit}
               containerStyles="mt-12 w-full"
               isLoading={isPending}
